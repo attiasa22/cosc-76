@@ -39,6 +39,8 @@ class FoxProblem:
         # if there is a negative number of animals or boats
         if state[0]<0 or state[1]<0 or state[2]<0:
             return []
+        if state[0]>self.total_chickens or state[1]>self.total_chickens:
+            return []
         # Left Bank: if there are more foxes than chickens
         elif state[0]<state[1] and state[0]>0:
             return []
