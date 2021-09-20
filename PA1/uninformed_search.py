@@ -30,9 +30,13 @@ def bfs_search(search_problem):
         
         if search_problem.goal_test(currentState):
             return backchain(currentNode)
-        
+        print("Parent:")
+        print(currentState)
+        print("Children:")
+        print(search_problem.get_successors(currentState))
         for child in search_problem.get_successors(currentState):
             childNode = SearchNode(child,parent= currentNode)
+
             if ''.join([str(count) for count in childNode.state]) not in visited:
                 frontier.append(childNode)
 
@@ -55,7 +59,7 @@ def backchain(currentNode):
 # We pass the solution along to each new recursive call to dfs_search
 #  so that statistics like number of nodes visited or recursion depth
 #  might be recorded
-def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
+def dfs_search_iterative(search_problem, depth_limit=100, node=None, solution=None):
     # if no node object given, create a new search from starting state
     if node == None:
         node = SearchNode(search_problem.start_state)
@@ -63,7 +67,7 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
 
     # you write this part
     frontier = deque()
-    visited={}
+    visited= set()
     startNode = SearchNode(search_problem.start_state)
     
     frontier.append(startNode)
@@ -71,7 +75,8 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
     while len(frontier) :
         currentNode = frontier.pop()
         currentState = currentNode.state
-        visited[''.join([str(count) for count in currentState])]=0
+        visited.add([''.join([str(count) for count in currentState])])
+        
         if search_problem.goal_test(currentState):
             return backchain(currentNode)
 
@@ -79,12 +84,30 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
             childNode = SearchNode(child,parent= currentNode)
             childNode.depth = currentNode.depth+1
 
-            if childNode.depth <= 100 and ''.join([str(count) for count in childNode.state]) not in visited:
+            if childNode.depth <= depth_limit and ''.join([str(count) for count in childNode.state]) not in visited:
                 frontier.append(childNode)
 
     return []
 
+visited = set()
+def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
+    # if no node object given, create a new search from starting state
+    if node == None:
+        node = SearchNode(search_problem.start_state)
+        solution = SearchSolution(search_problem, "DFS")
+    
+    if search_problem.goal_test(node.state):
+            return solution+[node.state]
 
+    # you write this part
+    if node.state not in visited and node.depth<100:
+        print(node.state)
+        visited.add(node.state) 
+        for child in search_problem.get_successors(node.state):
+            childNode=SearchNode(child,parent=node)
+            childNode.depth=node.depth+1
+            dfs_search(search_problem, depth_limit=100, node=childNode, solution=None)
+    return []
 
 def ids_search(search_problem, depth_limit=100):
     # you write this part

@@ -6,6 +6,7 @@ class FoxProblem:
         #  like the total number of chickens (which you can figure out
         #  based on start_state
         self.total_chickens = start_state[0]
+        self.total_foxes = start_state[1]
 
     # get successor states for the given state
     def get_successors(self, state):
@@ -35,11 +36,11 @@ class FoxProblem:
         return chickenBoat+foxBoat+chickensBoat+foxesBoat+zooBoat
 
     def check_successor_state(self,state):
-        rightBankState=(self.total_chickens-state[0],self.total_chickens-state[1],1-state[2])
+        rightBankState=(self.total_chickens-state[0],self.total_foxes-state[1],1-state[2])
         # if there is a negative number of animals or boats
         if state[0]<0 or state[1]<0 or state[2]<0:
             return []
-        if state[0]>self.total_chickens or state[1]>self.total_chickens:
+        if state[0]>self.total_chickens or state[1]>self.total_foxes:
             return []
         # Left Bank: if there are more foxes than chickens
         elif state[0]<state[1] and state[0]>0:
