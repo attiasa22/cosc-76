@@ -1,4 +1,4 @@
-### PA1 - Report
+### PA1 - ReadMe
 #### COSC 76
 ##### Ariel Attias
 
