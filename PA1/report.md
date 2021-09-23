@@ -36,8 +36,26 @@ DFS performed in the least amount of time, while IDS followed closely behind exc
 
 (c) Responses to discussion questions that are included within the points in "Required tasks" and the following point:
 
+Discussion that needs to be in the report: States are either legal, or not legal.  First, give an upper bound on the number of states, without considering legality of states.  (Hint -- 331 is one state.  231 another, although illegal.  Keep counting.) Describe how you got this number.
+
+Given  C chickens, there are C+1 amounts of chickens possible in a state (0,1,2,...,C). The same goes for foxes. 1 boat gives two options - the boat is either there or at the other bank. Therefore there are (C+1)(F+1)(2) possible states.
+
+Does path-checking depth-first search save significant memory with respect to breadth-first search?  Draw an example of a graph where path-checking DFS takes much more run-time than breadth-first search; include in your report and discuss.
+
+
+
+
+Does memoizing DFS save significant memory with respect to breadth-first search?  Why or why not? As a reminder, there are two styles of depth-first search on a graph.  One style, memoizing keeps track of all states that have been visited in some sort of data structure, and makes sure the DFS never visits the same state twice. 
+
+Discussion questions:  On a graph, would it make sense to use path-checking DFS, or would you prefer memoizing DFS in your iterative deepening search?  Consider both time and memory aspects.  (Hint.  If it's not better than BFS, just use BFS.)
+
+<img width="744" alt="Screen Shot 2021-09-23 at 1 42 00 PM" src="https://user-images.githubusercontent.com/72452765/134557195-9c87bd10-8270-4fab-ba3a-0c3c6461e003.png">
+
+
+
+
 - Lossy chickens and foxes: Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  What would the state for this problem be?  What changes would you have to make to your code to implement a solution?  Give an upper bound on the number of possible states for this problem.  (You need not implement anything here.)
 
-The state of this problem would be similar to the original problem, with the additional information of how many chickens the foxes have eaten. For example, state (2,2,1,1) describes a left bank with 2 chickens, 2 foxes, a boat, and one chicken eaten. I would need to change my `get_successors`,`check_successor_state`, and `goal_test` functions. `get_successors` would need to create the additional permutations of spaces where a chicken is eaten, as well as the other actions possible. `check_successor_state` would now need to allow some wiggle room based on E to determine if a space is actually a successor, most notably in a case where too many chickens will be eaten. Lastly, the `goal_test` function would need to account for the E possible end states $$(0,0,i,0): 0\leq i \leq E$$.
+The state of this problem would be similar to the original problem, with the additional information of how many chickens the foxes have eaten. For example, state (2,2,1,1) describes a left bank with 2 chickens, 2 foxes, a boat, and one chicken eaten. I would need to change my `get_successors`,`check_successor_state`, and `goal_test` functions. `get_successors` would need to create the additional permutations of spaces where a chicken is eaten, as well as the other actions possible. `check_successor_state` would now need to allow some wiggle room based on E to determine if a space is actually a successor, most notably in a case where too many chickens will be eaten. Lastly, the `goal_test` function would need to account for the E possible end states $$(0,0,i,0): 0 <= i <= E.
 
-Given C chickens, F foxes, E eaten chickens, and 1 boat, the total amount of states is $$(C+1) \times (F+1) \times (E+1)\times 2$$.
+Given C chickens, F foxes, E eaten chickens, and 1 boat, the total amount of states is (C+1) * (F+1) * (E+1) * 2.
