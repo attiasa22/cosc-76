@@ -14,10 +14,11 @@ class SearchNode:
         self.depth = 0
         self.state = state
         self.parent = parent
-
+counter=0
 # you might write other helper functions, too. For example,
 #  I like to separate out backchaining, and the dfs path checking functions
 def bfs_search(search_problem):
+    global counter
     visited = {}
     frontier = deque()
     startNode = SearchNode(search_problem.start_state)
@@ -33,13 +34,15 @@ def bfs_search(search_problem):
             return backchain(currentNode)
 
         for child in search_problem.get_successors(currentState):
+            counter+=1
             childNode = SearchNode(child,parent= currentNode)
 
             if ''.join([str(count) for count in childNode.state]) not in visited:
                 frontier.append(childNode)
-
+    #print(counter)
     return []
 
+counter=0
 def backchain(currentNode):
     backchain = []
 
@@ -90,6 +93,7 @@ def dfs_search_iterative(search_problem, depth_limit=100, node=None, solution=No
 
 def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
     # if no node object given, create a new search from starting state
+    global counter
     if node == None:
         node = SearchNode(search_problem.start_state)
         solution = SearchSolution(search_problem, "DFS")
@@ -100,13 +104,12 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
     if search_problem.goal_test(node.state):
         return solution.path  
 
-    
     path = []
     for child in search_problem.get_successors(node.state):
         ChildNode = SearchNode(child,node.state)
         ChildNode.depth = node.depth + 1
         solution.nodes_visited += 1
-        
+        counter+=1
         if child not in solution.path and ChildNode.depth<depth_limit:
             path = dfs_search(search_problem, depth_limit=100, node=ChildNode, solution=(solution)) 
         
@@ -115,6 +118,7 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
 
     return []
 
+counter=0
 def ids_search(search_problem, depth_limit=100):
     # you write this part
     # redo dfs for each depth limit
