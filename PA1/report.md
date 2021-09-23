@@ -18,19 +18,24 @@ a. Description:
 
 (b) Evaluation: Do your implemented algorithms actually work? How well? If it doesn’t work, can you tell why not? What partial successes did you have that deserve partial credit? Include a comparison of running time results using different heuristics and inference.
 
-The implemented algorithms actually work. All three functions return the correct answer in all three situations. Using Python's `timeit` library, I found
+The implemented algorithms actually work. All three functions return the correct answer in all three situations. Using Python's `timeit` library, I found the following"
 
 | Problem      | Method     |Time (seconds)|
 | ----------- | ----------- | ----------- |
 | 331         | BFS         | 0.024742385 |
-| 331         | DFS         | 009722079   |
-| 331         | IDS         | 011253211   |
+| -         | DFS         | 009722079   |
+| -         | IDS         | 011253211   |
 | 551         | BFS         | 0.022018086 |
-| 551         | DFS         | 0.009435617 |
-| 551         | IDS         | 0.965612073 |
+| -         | DFS         | 0.009435617 |
+| -         | IDS         | 0.965612073 |
 | 541         | BFS         | 0.119463483 |
-| 541         | DFS         | 0.015895401 |
-| 541         | IDS         | 0.019852066 |
+| -         | DFS         | 0.015895401 |
+| -         | IDS         | 0.019852066 |
+
+DFS performed in the least amount of time, while IDS followed closely behind except for when there is no solution, which makes sense as it is exhausting every path at every level before reaching the limit. BFS suffored from a similar issue by expanding into many useless paths, but did not perform as badly as IDS when there was no solution.
 
 (c) Responses to discussion questions that are included within the points in "Required tasks" and the following point:
+
 - Lossy chickens and foxes: Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  What would the state for this problem be?  What changes would you have to make to your code to implement a solution?  Give an upper bound on the number of possible states for this problem.  (You need not implement anything here.)
+
+The state of this problem would be similar to the original problem, with the additional information of how many chickens the foxes have eaten. For example, state (2,2,1,1) describes a left bank with 2 chickens, 2 foxes, a boat, and one chicken eaten. I would need to change my `get_successors`,`check_successor_state`, and `goal_test` functions. `get_successors` would need to create the additional permutations of spaces where a chicken is eaten, as well as the other actions possible. `check_successor_state` would now need to allow some wiggle room based on E to determine if a space is actually a successor, most notably in a case where too many chickens will be eaten. Lastly, the `goal_test` function would need to account for the E possible end states (0,0,i,0), such that 0<=i<=E.
