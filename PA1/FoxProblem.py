@@ -33,7 +33,7 @@ class FoxProblem:
         zooBoat = self.check_successor_state((state[0] + boatPresence,state[1]+boatPresence,1- state[2]))
 
         # return valid successor states
-        return chickenBoat+foxBoat+chickensBoat+foxesBoat+zooBoat
+        return foxesBoat+foxBoat+chickenBoat+chickensBoat+zooBoat
 
     def check_successor_state(self,state):
         rightBankState=(self.total_chickens-state[0],self.total_foxes-state[1],1-state[2])

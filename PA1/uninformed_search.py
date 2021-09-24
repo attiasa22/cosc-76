@@ -65,14 +65,12 @@ def dfs_search_iterative(search_problem, depth_limit=100, node=None, solution=No
     if node == None:
         node = SearchNode(search_problem.start_state)
         solution = SearchSolution(search_problem, "DFS")
-
     # you write this part
     frontier = deque()
     visited = set()
     startNode = SearchNode(search_problem.start_state)
     
     frontier.append(startNode)
-
     while len(frontier) :
         currentNode = frontier.pop()
         currentState = currentNode.state
@@ -80,14 +78,11 @@ def dfs_search_iterative(search_problem, depth_limit=100, node=None, solution=No
         
         if search_problem.goal_test(currentState):
             return backchain(currentNode)
-
         for child in search_problem.get_successors(currentState):
             childNode = SearchNode(child,parent= currentNode)
             childNode.depth = currentNode.depth+1
-
             if childNode.depth <= depth_limit and ''.join([str(count) for count in childNode.state]) not in visited:
                 frontier.append(childNode)
-
     return []
 '''
 
@@ -112,10 +107,11 @@ def dfs_search(search_problem, depth_limit=100, node=None, solution=None):
         counter+=1
         if child not in solution.path and ChildNode.depth<depth_limit:
             path = dfs_search(search_problem, depth_limit=100, node=ChildNode, solution=(solution)) 
-        
+            
         if len(path):
             return path
-
+    solution.path.pop()
+        
     return []
 
 counter=0
