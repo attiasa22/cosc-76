@@ -42,20 +42,22 @@ Given  C chickens, there are C+1 amounts of chickens possible in a state (0,1,2,
 
 Does path-checking depth-first search save significant memory with respect to breadth-first search?  Draw an example of a graph where path-checking DFS takes much more run-time than breadth-first search; include in your report and discuss.
 
-
-
-
-Does memoizing DFS save significant memory with respect to breadth-first search?  Why or why not? As a reminder, there are two styles of depth-first search on a graph.  One style, memoizing keeps track of all states that have been visited in some sort of data structure, and makes sure the DFS never visits the same state twice. 
-
-Discussion questions:  On a graph, would it make sense to use path-checking DFS, or would you prefer memoizing DFS in your iterative deepening search?  Consider both time and memory aspects.  (Hint.  If it's not better than BFS, just use BFS.)
+Yes, path-checking DFS saves significant memory with respect to BFS due to the lack of memoization.
 
 <img width="744" alt="Screen Shot 2021-09-23 at 1 42 00 PM" src="https://user-images.githubusercontent.com/72452765/134557195-9c87bd10-8270-4fab-ba3a-0c3c6461e003.png">
 
+In this example graph, a lexicographical search would yield a much longer Run-time for DFS, as it would have to traverse all the nodes before reaching goal X from start A. However, because X is so shallow, a BFS search would immediately find it.
 
+Does memoizing DFS save significant memory with respect to breadth-first search?  Why or why not? As a reminder, there are two styles of depth-first search on a graph.  One style, memoizing keeps track of all states that have been visited in some sort of data structure, and makes sure the DFS never visits the same state twice. 
 
+No it does not - memoizing DFS dramitically increases the space needed for DFS, as the frontier is much smaller than BFS. BFS's frontier is already big, so memoizing leads to space complexity not much larger than what it already is. Original DFS or DFS with path checking keeps a space complecity of O(bm) and O(m) respectively, where b is the branching factor of the tree and m is the longest path.
+
+Discussion questions:  On a graph, would it make sense to use path-checking DFS, or would you prefer memoizing DFS in your iterative deepening search?  Consider both time and memory aspects.  (Hint.  If it's not better than BFS, just use BFS.)
+
+On a graph, it would make sense to use path-checking DFS in order to maintain the low space complexity of O(bd). Whether or not path-checking or memoization is used, the time complexity is the same, O(b^d). If we switch to memoizing DFS, we are no better than BFS.
 
 - Lossy chickens and foxes: Every fox knows the saying that you can't make an omelet without breaking a few eggs.  What if, in the service of their faith, some chickens were willing to be made into lunch?  Let us design a problem where no more than E chickens could be eaten, where E is some constant.  What would the state for this problem be?  What changes would you have to make to your code to implement a solution?  Give an upper bound on the number of possible states for this problem.  (You need not implement anything here.)
 
-The state of this problem would be similar to the original problem, with the additional information of how many chickens the foxes have eaten. For example, state (2,2,1,1) describes a left bank with 2 chickens, 2 foxes, a boat, and one chicken eaten. I would need to change my `get_successors`,`check_successor_state`, and `goal_test` functions. `get_successors` would need to create the additional permutations of spaces where a chicken is eaten, as well as the other actions possible. `check_successor_state` would now need to allow some wiggle room based on E to determine if a space is actually a successor, most notably in a case where too many chickens will be eaten. Lastly, the `goal_test` function would need to account for the E possible end states $$(0,0,i,0): 0 <= i <= E.
+The state of this problem would be similar to the original problem, with the additional information of how many chickens the foxes have eaten. For example, state (2,2,1,1) describes a left bank with 2 chickens, 2 foxes, a boat, and one chicken eaten. I would need to change my `get_successors`,`check_successor_state`, and `goal_test` functions. `get_successors` would need to create the additional permutations of spaces where a chicken is eaten, as well as the other actions possible. `check_successor_state` would now need to allow some wiggle room based on E to determine if a space is actually a successor, most notably in a case where too many chickens will be eaten. Lastly, the `goal_test` function would need to account for the E possible end states (0,0,i,0): 0 <= i <= E.
 
-Given C chickens, F foxes, E eaten chickens, and 1 boat, the total amount of states is (C+1) * (F+1) * (E+1) * 2.
+Given C chickens, F foxes, E eaten chickens, and 1 boat, the total amount of possible states is (C+1) * (F+1) * (E+1) * 2.
