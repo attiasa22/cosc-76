@@ -18,7 +18,7 @@ a. Description:
 
 (b) Evaluation: Do your implemented algorithms actually work? How well? If it doesn’t work, can you tell why not? What partial successes did you have that deserve partial credit? Include a comparison of running time results using different heuristics and inference.
 
-The BFS and DFS algorithms actually work. However, IDS returns the same solution as DFS, as I suspect I was not completely familiar with how the code skeleton was supposed to be used to measure the depth of the solution. However, the depth limit does reach the correct length (16, or BFS's length, when returning the full path which has an actual length of 21). BFS and DFS functions return the correct answer in all three situations, while IDS returns the correct solution in 2/3 cases. Using Python's `timeit` library, I found the following"
+The algorithms actually work. Using Python's `timeit` library, I found the following"
 
 | Problem      | Method     |Time (seconds)|
 | ----------- | ----------- | ----------- |
