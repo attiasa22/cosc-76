@@ -7,9 +7,14 @@ class AstarNode:
 
     def __init__(self, state, heuristic, parent=None, transition_cost=0):
         # you write this part
+        self.state=state
+        self.heuristic=heuristic
+        self.parent=parent
+        self.transition_cost=transition_cost
 
     def priority(self):
         # you write this part
+        pass
 
     # comparison operator,
     # needed for heappush and heappop to work with AstarNodes:
@@ -30,6 +35,14 @@ def backchain(node):
     result.reverse()
     return result
 
+    #heuristic function - calculate manhattan distance
+def heuristic_fn(self, state):
+    score = 0
+        
+    for i in range(len(self.goal_locations)):
+        score += abs(self.goal_locations[i]-state[i+1])
+
+    return score
 
 def astar_search(search_problem, heuristic_fn):
     # I'll get you started:
