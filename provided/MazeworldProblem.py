@@ -7,11 +7,11 @@ class MazeworldProblem:
 
     def __init__(self, maze, goal_locations):
         self.maze = maze
-        self.goal_locations = goal_locations
+        self.goal_state = goal_locations
         self.width = maze.width
         self.height = maze.height
         self.robotCount = len(self.maze.robotloc)//2
-
+        self.start_state= tuple([2]+maze.robotloc)
     def __str__(self):
         string =  "Mazeworld problem: "
         return string
@@ -27,7 +27,10 @@ class MazeworldProblem:
         #indeces in tuple of coordinates
         xCoordinate = 2 * robot + 1
         yCoordinate = 2 * robot + 2
-        
+
+        #pass turn
+        passTurn= list.copy(list(state))
+        passTurn[0]=(state[0]+1)%self.robotCount
         #north 
         northState = list(state)
         northState[yCoordinate] += 1
@@ -41,7 +44,7 @@ class MazeworldProblem:
         westState = list(state)
         westState[xCoordinate] -= 1
 
-        return self.check_successors(northState, xCoordinate, yCoordinate) + self.check_successors(southState,xCoordinate, yCoordinate) + self.check_successors(eastState, xCoordinate, yCoordinate) + self.check_successors(westState, xCoordinate, yCoordinate)
+        return [passTurn]+self.check_successors(northState, xCoordinate, yCoordinate) + self.check_successors(southState,xCoordinate, yCoordinate) + self.check_successors(eastState, xCoordinate, yCoordinate) + self.check_successors(westState, xCoordinate, yCoordinate)
 
     def check_successors(self, state, xCoordinate,yCoordinate ):
         successors = []
@@ -49,10 +52,9 @@ class MazeworldProblem:
         if self.maze.is_floor(state[xCoordinate],state[yCoordinate]) and not self.maze.has_robot(state[xCoordinate],state[yCoordinate]):
             
             
-            for i in range(self.robotCount):
-                newState =  list.copy(state)
-                newState[0] = i
-                successors += [newState]
+            newState =  list.copy(state)
+            newState[0] = (state[0]+1)%self.robotCount
+            successors += [newState]
 
         return successors
 
@@ -61,6 +63,14 @@ class MazeworldProblem:
             return 1
         else:
             return 0
+
+    #heuristic function - calculate manhattan distance
+    def heuristic_fn(self, state):
+        score = 0
+        for i in range(len(self.goal_state)):
+            score += abs(self.goal_state[i]-state[i+1])
+
+        return score
 
     def animate_path(self, path):
         # reset the robot locations in the maze
@@ -92,3 +102,4 @@ if __name__ == "__main__":
     \robot 2 1
     '''
     print(test_mp.get_successors((0, 1, 0, 1, 2, 2, 1)))
+    print(test_mp.heuristic_fn((0, 1, 0, 1, 2, 2, 1)))

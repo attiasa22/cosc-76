@@ -1,5 +1,6 @@
 from SearchSolution import SearchSolution
 from heapq import heappush, heappop
+import Maze, MazeworldProblem
 
 class AstarNode:
     # each search node except the root has a parent node
@@ -14,7 +15,7 @@ class AstarNode:
 
     def priority(self):
         # you write this part
-        pass
+        return self.heuristic+self.transition_cost
 
     # comparison operator,
     # needed for heappush and heappop to work with AstarNodes:
@@ -35,15 +36,6 @@ def backchain(node):
     result.reverse()
     return result
 
-    #heuristic function - calculate manhattan distance
-def heuristic_fn(self, state):
-    score = 0
-        
-    for i in range(len(self.goal_locations)):
-        score += abs(self.goal_locations[i]-state[i+1])
-
-    return score
-
 def astar_search(search_problem, heuristic_fn):
     # I'll get you started:
     start_node = AstarNode(search_problem.start_state, heuristic_fn(search_problem.start_state))
@@ -56,3 +48,38 @@ def astar_search(search_problem, heuristic_fn):
     visited_cost[start_node.state] = 0
 
     # you write the rest:
+    while len(pqueue):
+        node = heappop(pqueue)
+        if search_problem.goal_test(node.state[1:]):
+            print(search_problem.animate_path(backchain(node)))
+            return backchain(node)
+        
+        for childState in search_problem.get_successors(node.state):
+            # Python is finicky with using lists/tuples as dictionary keys, so i added this line
+            immutableState = tuple(childState)
+
+            child_node = AstarNode(immutableState, parent= node, heuristic=heuristic_fn(childState),transition_cost=1)
+            
+            
+            if child_node.state not in visited_cost or child_node.priority() < visited_cost[child_node.state]:
+                heappush(pqueue, child_node)
+                #print(search_problem.animate_path(backchain(child_node))) 
+                visited_cost[child_node.state] = child_node.priority()
+
+    return []
+
+if __name__ == "__main__":
+    test_maze3 = Maze.Maze("maze3.maz")
+    test_mp = MazeworldProblem.MazeworldProblem(test_maze3, (1, 4, 1, 3, 1, 2))
+    '''
+    ##.##
+    #...#
+    #.#.#
+    #...#
+    #...#
+    #.###
+    \robot 1 0
+    \robot 1 1
+    \robot 2 1
+    '''
+    print(astar_search(test_mp, test_mp.heuristic_fn))
