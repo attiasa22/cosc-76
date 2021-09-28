@@ -11,7 +11,7 @@ class MazeworldProblem:
         self.width = maze.width
         self.height = maze.height
         self.robotCount = len(self.maze.robotloc)//2
-        self.start_state= tuple([2]+maze.robotloc)
+        self.start_state= tuple([0]+maze.robotloc)
     def __str__(self):
         string =  "Mazeworld problem: "
         return string
@@ -51,7 +51,6 @@ class MazeworldProblem:
 
         if self.maze.is_floor(state[xCoordinate],state[yCoordinate]) and not self.maze.has_robot(state[xCoordinate],state[yCoordinate]):
             
-            
             newState =  list.copy(state)
             newState[0] = (state[0]+1)%self.robotCount
             successors += [newState]
@@ -79,7 +78,7 @@ class MazeworldProblem:
         for state in path:
             print(str(self))
             self.maze.robotloc = tuple(state[1:])
-            sleep(1)
+            sleep(0.5)
 
             print(str(self.maze))
 

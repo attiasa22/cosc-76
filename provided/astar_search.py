@@ -15,6 +15,8 @@ class AstarNode:
 
     def priority(self):
         # you write this part
+        if self.parent is not None:
+            return self.heuristic+self.transition_cost+self.parent.priority()
         return self.heuristic+self.transition_cost
 
     # comparison operator,
@@ -57,29 +59,13 @@ def astar_search(search_problem, heuristic_fn):
         for childState in search_problem.get_successors(node.state):
             # Python is finicky with using lists/tuples as dictionary keys, so i added this line
             immutableState = tuple(childState)
-
-            child_node = AstarNode(immutableState, parent= node, heuristic=heuristic_fn(childState),transition_cost=1)
-            
+            transitionCost= int(not (tuple(childState[1:])==tuple(node.state[1:])))
+            child_node = AstarNode(immutableState, parent= node, heuristic=heuristic_fn(childState),transition_cost=transitionCost)
             
             if child_node.state not in visited_cost or child_node.priority() < visited_cost[child_node.state]:
                 heappush(pqueue, child_node)
-                #print(search_problem.animate_path(backchain(child_node))) 
                 visited_cost[child_node.state] = child_node.priority()
+                
 
+    print(search_problem.animate_path(backchain(child_node))) 
     return []
-
-if __name__ == "__main__":
-    test_maze3 = Maze.Maze("maze3.maz")
-    test_mp = MazeworldProblem.MazeworldProblem(test_maze3, (1, 4, 1, 3, 1, 2))
-    '''
-    ##.##
-    #...#
-    #.#.#
-    #...#
-    #...#
-    #.###
-    \robot 1 0
-    \robot 1 1
-    \robot 2 1
-    '''
-    print(astar_search(test_mp, test_mp.heuristic_fn))
