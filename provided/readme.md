@@ -11,8 +11,18 @@ To run your own test, create a maze in a `filename.maz` file.
 
 The maze should have between 1-3 robots.
 
- a. Call maze with `testmazeX = Maze("filename.maz")` \n
- b. Pass maze into a problem like `test_mp = MazeworldProblem(test_maze3, (x1, y1, x2, y2,... xN, yN))`    where N is the number of robots in the maze \n
- c. Lastly, animate the path with a statment similar to `print(astar_search(test_mp2, test_mp2.heuristic_fn))` \n
+ a. Call maze with `testmazeX = Maze("filename.maz")` 
  
-2. 
+ b. Pass maze into a problem like `test_mp = MazeworldProblem(test_maze3, (x1, y1, x2, y2,... xN, yN))` where N is the number of robots in the maze and the coordinates are valid goal coordinates.
+ 
+ c. Lastly, animate the path with a statment similar to `print(astar_search(test_mp2, test_mp2.heuristic_fn))`
+ 
+2. Running a sensorless test:
+
+The maze should have 1 robot.
+
+ a. Call maze with `testmazeX = Maze("filename.maz")` 
+ 
+ b. Pass maze into a problem like `test_mp = SensorlessProblem(test_maze3)`.
+ 
+ c. Lastly, animate the path with a statment similar to `print(astar_search(test_mp2, test_mp2.heuristic_fn))`
