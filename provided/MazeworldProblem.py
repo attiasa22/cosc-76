@@ -58,7 +58,7 @@ class MazeworldProblem:
         return successors
 
     def goal_test(self,locations):
-        if locations==self.goal_state:
+        if locations[1:]==self.goal_state:
             return 1
         else:
             return 0

@@ -16,6 +16,7 @@ test_maze5 = Maze("maze5.maz")
 test_maze6 = Maze("maze6.maz")
 test_maze7 = Maze("maze7.maz")
 test_maze8 = Maze("maze8.maz")
+test_maze9 = Maze("maze9.maz")
 
 test_mp = MazeworldProblem(test_maze3, (1, 4, 1, 3, 1, 2))
 test_mp = MazeworldProblem(test_maze3,  ( 1, 4, 1, 3, 1, 2))
@@ -24,6 +25,7 @@ test_mp3 = MazeworldProblem(test_maze5, ( 8, 9, 7, 9, 6, 9))
 test_mp4 = MazeworldProblem(test_maze6, ( 8, 8, 8, 1, 1, 8))
 test_mp5 = MazeworldProblem(test_maze7, ( 1, 9))
 test_mp6 = MazeworldProblem(test_maze8, ( 8, 8, 8, 1, 1, 8))
+test_mp7 = MazeworldProblem(test_maze9, ( 36, 36, 35, 35, 34, 34))
 
 
 print(test_mp.get_successors(test_mp.start_state))
@@ -43,3 +45,4 @@ print(astar_search(test_mp3, test_mp3.heuristic_fn)) # works in under 1 minute
 print(astar_search(test_mp4, test_mp4.heuristic_fn)) # works in 2-3 minutes
 print(astar_search(test_mp5, test_mp5.heuristic_fn)) # works
 print(astar_search(test_mp6, test_mp6.heuristic_fn)) # works in under 1 minute
+print(astar_search(test_mp7, test_mp6.heuristic_fn)) # works in under 1 minute
