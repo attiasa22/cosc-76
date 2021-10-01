@@ -12,7 +12,7 @@ from skimage import segmentation
 from skimage.color import label2rgb
 from scipy import ndimage as ndi
 
-wood = io.imread('Desktop/wood.jpg')
+wood = io.imread('wood2.jpg')
 woodArray=np.asarray(wood)
 grayscale = rgb2gray(woodArray)
 print(woodArray.shape)
