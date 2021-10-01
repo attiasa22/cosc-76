@@ -35,7 +35,6 @@ def backchain(node):
     while current:
         result.append(current.state)
         current = current.parent
-
     result.reverse()
     return result
 
@@ -54,7 +53,7 @@ def astar_search(search_problem, heuristic_fn):
     while len(pqueue):
         node = heappop(pqueue)
         if search_problem.goal_test(node.state):
-            print(search_problem.animate_path(backchain(node)))
+            #print(search_problem.animate_path(backchain(node)))
             return backchain(node)
         
         for childState in search_problem.get_successors(node.state):

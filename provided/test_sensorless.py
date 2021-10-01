@@ -32,8 +32,8 @@ test_mp7 = SensorlessProblem(test_maze9)
 print(test_mp.get_successors(test_mp.start_state))
 
 # this should explore a lot of nodes; it's just uniform-cost search
-result = astar_search(test_mp, null_heuristic)
-print(result)
+#result = astar_search(test_mp, null_heuristic)
+#print(result)
 
 # this should do a bit better:
 result = astar_search(test_mp, test_mp.heuristic_fn)
@@ -46,4 +46,4 @@ test_mp.animate_path(result)
 #print(astar_search(test_mp4, test_mp4.heuristic_fn)) # works in 2-3 minutes
 #print(astar_search(test_mp5, test_mp5.heuristic_fn)) # works
 #print(astar_search(test_mp6, test_mp6.heuristic_fn)) # works in under 1 minute
-print(astar_search(test_mp7, test_mp6.heuristic_fn)) # works in under 1 minute
+#print(astar_search(test_mp7, test_mp6.heuristic_fn)) # works in under 1 minute

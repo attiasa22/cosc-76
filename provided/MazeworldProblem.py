@@ -46,7 +46,7 @@ class MazeworldProblem:
 
         return [passTurn]+self.check_successors(northState, xCoordinate, yCoordinate) + self.check_successors(southState,xCoordinate, yCoordinate) + self.check_successors(eastState, xCoordinate, yCoordinate) + self.check_successors(westState, xCoordinate, yCoordinate)
 
-    def check_successors(self, state, xCoordinate,yCoordinate ):
+    def check_successors(self, state, xCoordinate, yCoordinate):
         successors = []
 
         if self.maze.is_floor(state[xCoordinate],state[yCoordinate]) and not self.maze.has_robot(state[xCoordinate],state[yCoordinate]):
@@ -57,7 +57,7 @@ class MazeworldProblem:
 
         return successors
 
-    def goal_test(self,locations):
+    def goal_test(self, locations):
         if locations[1:]==self.goal_state:
             return 1
         else:

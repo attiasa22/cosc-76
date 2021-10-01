@@ -28,29 +28,34 @@ class SensorlessProblem:
         return [northAction] + [southAction] + [eastAction] + [westAction]
 
     def check_successors(self, xChange, yChange, beliefStates):
+        visited=set()
         successors=[]
         #for each belief state
         #check if the successor belief state 
-        for index in range(0, len(beliefStates), 2):
+        for index in range(0,len(beliefStates),2):
+
             newX = beliefStates[index]+xChange
             newY = beliefStates[index+1]+yChange
             if self.maze.is_floor(newX,newY):
                 successors+=(newX, newY)
-
-        return successors
+                visited.add((newX,  newY))
+            elif (beliefStates[index],  beliefStates[index+1]) not in visited:
+                successors+=(beliefStates[index],  beliefStates[index+1])
+                visited.add((beliefStates[index],  beliefStates[index+1]))
+        return list(successors)
 
     def goal_test(self,beliefStates):
-        if len(beliefStates)==1:
+        if len(beliefStates)==2:
             return True
         return False 
 
     def heuristic_fn(self, successorStates):
+        print(len(successorStates))
         return len(successorStates)
 
     def __str__(self):
         string =  "Blind robot problem: "
         return string
-
 
         # given a sequence of states (including robot turn), modify the maze and print it out.
         #  (Be careful, this does modify the maze!)
