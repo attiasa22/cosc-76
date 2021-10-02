@@ -67,5 +67,5 @@ Blindrobot
 
 **Describe what heuristic you used for the A* search. Is the heuristic optimistic? Are there other heuristics you might use? (An excellent might compare a few different heuristics for effectiveness and make an argument about optimality.)**
 
-For the blindrobot A* search, I used the number of robots still present as a heurisitc. The heuristic is opi
-
+For the blindrobot A* search, I used the number of robots still present as a heuristic. The heuristic is optimistic.
+Other heuristics you might use include the euclidean or manhattan distance between the farthest two belief states (or more than 2, etc). Another heuristic might be to find the change in belief states from the previous state.
