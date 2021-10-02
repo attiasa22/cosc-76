@@ -54,7 +54,7 @@ def astar_search(search_problem, heuristic_fn):
 
     def add_task(task, priority = 0):
         'Add a new task or update the priority of an existing task'
-        if task.state in visited_cost:
+        if task.state in entry_finder:
             remove_task(task)
         count = next(counter)
         entry = [priority, count, task]
@@ -78,10 +78,16 @@ def astar_search(search_problem, heuristic_fn):
     while len(pqueue):
 
         node = pop_task()
-
+ 
         if search_problem.goal_test(node.state):
-            return backchain(node)
+            solution.path=backchain(node)
+            solution.cost=node.cost
+            solution.nodes_visited=len(solution.path)
 
+            print("COST: %d" %solution.cost)
+            print("NODES VISITED: %d" %solution.nodes_visited)
+
+            return solution.path
         for childState in search_problem.get_successors(node.state):
             transition_cost = int(tuple(childState[1:]) != tuple(node.state[1:]))
             new_cost = transition_cost+node.cost
