@@ -2,64 +2,65 @@ from Maze import Maze
 from time import sleep
 
 class SensorlessProblem:
-
     ## You write the good stuff here:
     def __init__(self, maze):
         self.maze = maze
-        self.start_state= tuple(self.initBeliefStates())
-        self.height = maze.height
+        self.start_state = tuple(self.initbeliefstates())
 
-    def initBeliefStates(self):
-        beliefStates =[]
+    def initbeliefstates(self):
+        belief_states = []
+        # for each cell in a maze
         for i in range(self.maze.width):
-            for j in range(self.maze.height):
+            for j in range(self.maze.height): 
+                # if the cell is a tile
                 if self.maze.is_floor(i,j):
-                    beliefStates+=(i,j)
-        return beliefStates
+                    # include the cell in our initial belief states
+                    belief_states += (i,j)
+        return belief_states
 
+    def get_successors(self, belief_states):
+        #go through the 4 possible actions and return the belief states they lead to 
+        north_action = self.check_successors(0 , 1, belief_states)
+        south_action = self.check_successors(0, -1, belief_states)
+        east_action = self.check_successors(1, 0, belief_states)
+        west_action = self.check_successors(-1, 0, belief_states)
 
-    def get_successors(self, beliefStates):
-        #go through the 4 possible directions
-        northAction = self.check_successors(0 , 1, beliefStates)
-        southAction = self.check_successors(0, -1, beliefStates)
-        eastAction = self.check_successors(1, 0, beliefStates)
-        westAction = self.check_successors(-1, 0, beliefStates)
-        #check if the successor belief state 
-        return [northAction] + [southAction] + [eastAction] + [westAction]
+        return [north_action] + [south_action] + [east_action] + [west_action]
 
-    def check_successors(self, xChange, yChange, beliefStates):
-        visited=set()
-        successors=[]
-        #for each belief state
-        #check if the successor belief state 
-        for index in range(0,len(beliefStates),2):
+    def check_successors(self, x_change, y_change, belief_states):
+        visited = set()
+        successors = []
 
-            newX = beliefStates[index]+xChange
-            newY = beliefStates[index+1]+yChange
-            if self.maze.is_floor(newX,newY):
-                successors+=(newX, newY)
-                visited.add((newX,  newY))
-            elif (beliefStates[index],  beliefStates[index+1]) not in visited:
-                successors+=(beliefStates[index],  beliefStates[index+1])
-                visited.add((beliefStates[index],  beliefStates[index+1]))
+        #for each location
+        for index in range(0, len(belief_states), 2):
+            #determine the potential new belief state
+            new_x = belief_states[index]+x_change
+            new_y = belief_states[index+1]+y_change
+
+            if self.maze.is_floor(new_x,new_y):
+                successors+=(new_x, new_y)
+                visited.add((new_x,  new_y))
+            #if the new action leads to an impossible belief state, and there already isnt a robot here
+            elif (belief_states[index],  belief_states[index+1]) not in visited:
+                #add the current location as well
+                successors+=(belief_states[index],  belief_states[index+1])
+                visited.add((belief_states[index],  belief_states[index+1]))
         return list(successors)
 
-    def goal_test(self,beliefStates):
-        if len(beliefStates)==2:
+    def goal_test(self,belief_states):
+        if len(belief_states) == 2:
             return True
         return False 
 
-    def heuristic_fn(self, successorStates):
-        print(len(successorStates))
-        return len(successorStates)
+    def heuristic_fn(self, successor_states):
+        return len(successor_states)
 
     def __str__(self):
         string =  "Blind robot problem: "
         return string
 
-        # given a sequence of states (including robot turn), modify the maze and print it out.
-        #  (Be careful, this does modify the maze!)
-
+    # given a sequence of states (including robot turn), modify the maze and print it out.
+    #  (Be careful, this does modify the maze!)
     def animate_path(self, path):
         # reset the robot locations in the maze
         self.maze.robotloc = tuple(self.start_state)
@@ -70,12 +71,3 @@ class SensorlessProblem:
             sleep(1)
 
             print(str(self.maze))
-
-
-## A bit of test code
-
-if __name__ == "__main__":
-    test_maze3 = Maze("maze3.maz")
-    test_problem = SensorlessProblem(test_maze3)
-
-    print(test_problem.get_successors(test_problem.initBeliefStates()))
