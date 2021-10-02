@@ -8,8 +8,6 @@ class MazeworldProblem:
     def __init__(self, maze, goal_locations):
         self.maze = maze
         self.goal_state = goal_locations
-        self.width = maze.width
-        self.height = maze.height
         self.robotCount = len(self.maze.robotloc)//2
         self.start_state= tuple([0]+maze.robotloc)
     def __str__(self):
@@ -70,6 +68,9 @@ class MazeworldProblem:
             score += abs(self.goal_state[i]-state[i+1])
 
         return score
+
+    def calculatetransitioncost(self, childState, node):
+        return int(tuple(childState[1:]) != tuple(node.state[1:]))
 
     def animate_path(self, path):
         # reset the robot locations in the maze

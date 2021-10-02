@@ -21,9 +21,9 @@ test_mp = MazeworldProblem(test_maze3, (1, 4, 1, 3, 1, 2))
 test_mp2 = MazeworldProblem(test_maze4, ( 1, 2, 1, 1, 1, 0))
 test_mp3 = MazeworldProblem(test_maze5, ( 8, 9, 7, 9, 6, 9))
 test_mp4 = MazeworldProblem(test_maze6, ( 8, 8, 8, 1, 1, 8))
-test_mp5 = MazeworldProblem(test_maze7, ( 1, 9))
+test_mp5 = MazeworldProblem(test_maze7, ( 1, 9, 1, 1, 1, 4))
 test_mp6 = MazeworldProblem(test_maze8, ( 8, 1, 8, 8, 1, 1))
-
+'''
 print(test_mp.get_successors(test_mp.start_state))
 
 #this should explore a lot of nodes; it's just uniform-cost search
@@ -47,7 +47,7 @@ test_mp3.animate_path(result)
 result=astar_search(test_mp4, test_mp4.heuristic_fn)
 print(result)
 test_mp4.animate_path(result)
-
+'''
 result = astar_search(test_mp5, test_mp5.heuristic_fn)# works
 print(result)
 test_mp5.animate_path(result)

@@ -53,8 +53,11 @@ class SensorlessProblem:
         return False 
 
     def heuristic_fn(self, successor_states):
-        return len(successor_states)
+        return len(successor_states)/2
 
+    def calculatetransitioncost(self, childState, node):
+        return 1
+         
     def __str__(self):
         string =  "Blind robot problem: "
         return string

@@ -24,13 +24,13 @@ test_mp3 = SensorlessProblem(test_maze5)
 test_mp4 = SensorlessProblem(test_maze6)
 test_mp5 = SensorlessProblem(test_maze7)
 test_mp6 = SensorlessProblem(test_maze8)
-'''
+
 print(test_mp.get_successors(test_mp.start_state))
 
 #this should explore a lot of nodes; it's just uniform-cost search
 result = astar_search(test_mp, null_heuristic)
 print(result)
-
+test_mp.animate_path(result)
 # this should do a bit better:
 result = astar_search(test_mp, test_mp.heuristic_fn)
 print(result)
@@ -40,7 +40,7 @@ test_mp.animate_path(result)
 result=astar_search(test_mp2, test_mp2.heuristic_fn) # works in under 1 minute
 print(result)
 test_mp2.animate_path(result)
-'''
+
 result=astar_search(test_mp3, test_mp3.heuristic_fn) # works in under 1 minute
 print(result)
 test_mp3.animate_path(result)

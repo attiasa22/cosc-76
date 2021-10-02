@@ -89,7 +89,8 @@ def astar_search(search_problem, heuristic_fn):
 
             return solution.path
         for childState in search_problem.get_successors(node.state):
-            transition_cost = int(tuple(childState[1:]) != tuple(node.state[1:]))
+            
+            transition_cost = search_problem.calculatetransitioncost(childState, node)
             new_cost = transition_cost+node.cost
             child_node = AstarNode(tuple(childState), parent = node, heuristic = heuristic_fn(childState), cost = new_cost )
             
