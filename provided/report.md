@@ -48,7 +48,7 @@ Mazeworld
 
 **If there are not many walls, n is large (say 100x100), and several  robots (say 10), do you expect a straightforward breadth-first search on the state space to be computationally feasible for all start and goal pairs? Why or why not?**
 
-WRITE
+No, as there would be around O(k(n^(2k)))= O(10(100^20)) possible states, which would be very computationally difficult to explore with BFS.
 
 **Describe a useful, monotonic heuristic function for this search space. Show that your heuristic is monotonic. See the textbook for a formal definition of monotonic.**
 
