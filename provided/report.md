@@ -61,6 +61,8 @@ The state space of the 8-puzzle is made of two disjoint sets.  Describe how you 
 
   The 8 puzzle problem is a special case of this general idea, as the tiles are always adjacent to at least two other tiles, and the tiles (except for 1), are all situated in another tile's goal location, and a tile is in its goal location. The manhattan distance is an admissible heuristic as it is monotonic and must underestimate the real cost, but perhaps it does not approach the best function value, which would be nearer to the real cost of a state's path.
 
+To show this, I would create the 8-tile "maze" with the 8 robots and try to use Mazeworld problem to solve it for some number of goal states, with the start state being the "solution" (e.g. tiles are numbered in order). Inverting two of the tiles should create a new board that is unreachable by A* from the start state.
+
 Blindrobot
 
 **Describe what heuristic you used for the A* search. Is the heuristic optimistic? Are there other heuristics you might use? (An excellent might compare a few different heuristics for effectiveness and make an argument about optimality.)**
