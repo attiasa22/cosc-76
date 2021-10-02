@@ -41,9 +41,14 @@ result=astar_search(test_mp2, test_mp2.heuristic_fn) # works in under 1 minute
 print(result)
 test_mp2.animate_path(result)
 
+
 result=astar_search(test_mp3, test_mp3.heuristic_fn) # works in under 1 minute
 print(result)
 test_mp3.animate_path(result)
+
+result=astar_search(test_mp4, null_heuristic)
+print(result)
+test_mp4.animate_path(result)
 
 result=astar_search(test_mp4, test_mp4.heuristic_fn)
 print(result)
