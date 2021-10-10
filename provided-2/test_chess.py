@@ -15,8 +15,9 @@ import sys
 player1 = HumanPlayer()
 player2 = RandomAI()
 player3 = MinimaxAI(depth = 3)
+player4 = AlphaBetaAI(depth = 3)
 
-game = ChessGame(player1, player3)
+game = ChessGame(player1, player4)
 
 while not game.is_game_over():
     print(game)
