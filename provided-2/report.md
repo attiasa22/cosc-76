@@ -227,7 +227,7 @@ R . B Q K B . R
 ----------------
 a b c d e f g h
 
-<pre>
+</pre>
 
 
 
@@ -522,7 +522,7 @@ R . B Q K B R .
 ----------------
 a b c d e f g h
 
-<pre>
+</pre>
 
  (c) Responses to discussion questions that are included within the points in "The Task". Here the discussion questions are reported for ensuring that you found all of them:
      
