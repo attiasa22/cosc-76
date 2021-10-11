@@ -33,7 +33,7 @@
 | 4         | 388,425         | 5846 |
 
 From a chess perspective, Alpha Beta performs better than Minimax. As the human player, I played the same moves and recorded them.
-
+<div>
 Alpha Beta 
 
 r n b q k b n r
@@ -520,6 +520,7 @@ R . B Q K B R .
 ----------------
 a b c d e f g h
 
+<div>
 
  (c) Responses to discussion questions that are included within the points in "The Task". Here the discussion questions are reported for ensuring that you found all of them:
      
