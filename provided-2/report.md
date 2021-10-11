@@ -23,7 +23,7 @@
  
   (b) Evaluation: Do your implemented algorithms actually work? How well? If it doesn’t work, can you tell why not? What partial successes did you have that deserve partial credit?
  
- The implemented algorithms actually work. Alpha Beta pruning was tested by counting each node visited and improves significantly with respect to Minimax. 
+ The implemented algorithms actually work. Alpha Beta pruning was tested by counting each node visited and improves significantly with respect to Minimax. In a similar game, these are the number of nodes visited at each depth.
  
  | Depth      | Minimax nodes visited| AlphaBeta nodes visited|
 | ----------- | -------------------- | ---------------------- |
@@ -31,6 +31,21 @@
 | 2         | 603         | 117   |
 | 3         | 13,619         | 1023   |
 | 4         | 388,425         | 5846 |
+
+From a chess perspective, Alpha Beta performs better than Minimax. As the human player, I played the same moves and recorded them.
+
+ | Minimax      | Minimax nodes visited| AlphaBeta nodes visited|
+| AlphaBeta | r n b q k b n r
+p p p p p p p p
+. . . . . . . .
+. . . . . . . .
+. . . P . . . .
+. . . . . . . .
+P P P . P P P P
+R N B Q K B N R
+----------------
+a b c d e f g h | ---------------------- |
+
 
  (c) Responses to discussion questions that are included within the points in "The Task". Here the discussion questions are reported for ensuring that you found all of them:
      
