@@ -33,9 +33,9 @@
 | 4         | 388,425         | 5846 |
 
 From a chess perspective, Alpha Beta performs better than Minimax. As the human player, I played the same moves and recorded them.
-<pre>
-Alpha Beta 
 
+Alpha Beta 
+<pre>
 r n b q k b n r
 p p p p p p p p
 . . . . . . . .
@@ -227,11 +227,13 @@ R . B Q K B . R
 ----------------
 a b c d e f g h
 
-White to move
+<pre>
 
-Please enter your move: 
+
 
 Minimax
+
+<pre>
 
 Black to move
 
