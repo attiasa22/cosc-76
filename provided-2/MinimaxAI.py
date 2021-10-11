@@ -5,15 +5,16 @@ class MinimaxAI():
         self.depth = depth
         self.nodes_traveled = 0 
     def choose_move(self, board):   
-        return self.MinimaxSearch(board)
+        value, move = self.Search(board)
+        return move
 
     def CutoffTest(self, board, current_depth):
             return board.is_game_over() or current_depth > self.depth
     
-    def MinimaxSearch(self, board):
+    def Search(self, board):
         value, move = self.MaxValue(board, 0)
         print(self.nodes_traveled)
-        return move
+        return value, move
 
     def MaxValue(self, board, current_depth):
         current_depth += 1

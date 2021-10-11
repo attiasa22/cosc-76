@@ -8,16 +8,17 @@ class AlphaBetaAI():
         self.nodes_traveled = 0 
         #906 nodes travelled d2d4 first move, depth 3
     def choose_move(self, board):   
-        
-        return self.AlphaBetaSearch(board)
+        value, move = self.Search(board)
+        return move
 
     def CutoffTest(self, board, current_depth):
             return board.is_game_over() or current_depth > self.depth
     
-    def AlphaBetaSearch(self, board):
+    def Search(self, board):
         value, move = self.MaxValue(board, 0, float("-inf"), float("inf"))
         print(self.nodes_traveled)
-        return move
+        print(value)
+        return value, move
 
     def MaxValue(self, board, current_depth, alpha, beta):
         current_depth += 1
@@ -74,7 +75,6 @@ class AlphaBetaAI():
         return value, best_move
 
     def heuristic(self, board, move = None):
-        print(move)
         piece_scores = {1: 1, 2: 3, 3: 3, 4: 5, 5: 9, 6: 0}
         score = 0
         if move != None:
