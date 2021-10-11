@@ -528,12 +528,14 @@ a b c d e f g h
      
 1) (minimax and cutoff test) Vary maximum depth to get a feeling of the speed of the algorithm. Also, have the program print the number of calls it made to minimax as well as the maximum depth.  Record your observations in your document.
 
-I have attahced the count above, and minimax performs very slowly after increasing the depth to 4 or 5. The above text also has the number of calls attached.
+I have attached the count above, and minimax performs very slowly after increasing the depth to 4 or 5. The above text also has the number of calls attached.
       
 2) (evaluation function) Describe the evaluation function used and vary the allowed depth, and discuss in your document the results.
       
 The evaluation function used is a measure of the difference in material based on the typical scoring scheme (5 points for a rook, 3 points for a bishop or knight, etc.) The function works well enough in the opening game but is not enough for a full game which requires long-term strategy. For example, d2d4 is a drastically better first move than moving a knight, yet this evaluation function evaluates them to be the same, especially with not enough depth.
       
 3) (alpha-beta) Record your observations on move-reordering in your document.
+
+I sorted the list of legal moves with the line `moves.sort(key = lambda move: self.heuristic(board, move = move), reverse=True)` which sorts the moves in largest smallest points difference ('winning' to 'losing' positions).
       
 4) (iterative deepening) Verify that for some start states, best_move changes (and hopefully improves) as deeper levels are searched. Discuss the observations in your document.
