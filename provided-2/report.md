@@ -23,6 +23,10 @@
  
   (b) Evaluation: Do your implemented algorithms actually work? How well? If it doesn’t work, can you tell why not? What partial successes did you have that deserve partial credit?
  
+ The implemented algorithms actually work. Alpha Beta pruning was tested by counting each node visited and improves significantly with respect to Minimax. 
+ 
+ 
+ 
  (c) Responses to discussion questions that are included within the points in "The Task". Here the discussion questions are reported for ensuring that you found all of them:
      
 1) (minimax and cutoff test) Vary maximum depth to get a feeling of the speed of the algorithm. Also, have the program print the number of calls it made to minimax as well as the maximum depth.  Record your observations in your document.
