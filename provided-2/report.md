@@ -25,8 +25,13 @@
  
  The implemented algorithms actually work. Alpha Beta pruning was tested by counting each node visited and improves significantly with respect to Minimax. 
  
- 
- 
+ | Depth      | Minimax nodes visited| AlphaBeta nodes visited|
+| ----------- | -------------------- | ---------------------- |
+| 1         | 22         | 22 |
+| 2         | 603         | 117   |
+| 3         | 13,619         | 1023   |
+| 4         | 388,425         | 5846 |
+
  (c) Responses to discussion questions that are included within the points in "The Task". Here the discussion questions are reported for ensuring that you found all of them:
      
 1) (minimax and cutoff test) Vary maximum depth to get a feeling of the speed of the algorithm. Also, have the program print the number of calls it made to minimax as well as the maximum depth.  Record your observations in your document.
