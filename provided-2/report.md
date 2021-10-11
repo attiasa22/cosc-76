@@ -78,7 +78,11 @@ R N B Q K B N R
 a b c d e f g h
 
 White to move
+</pre>
+pawn to e6 is the beginning of the French Defense, a perfectly fine opening
 
+
+<pre>
 Please enter your move: 
 e2e4
 True
@@ -138,7 +142,11 @@ R . B Q K B N R
 a b c d e f g h
 
 White to move
+</pre>
 
+The bishop is now pinning my knight
+
+<pre>
 Please enter your move: 
 a2a3
 True
@@ -168,7 +176,11 @@ R . B Q K B N R
 a b c d e f g h
 
 White to move
+</pre>
 
+With my pawn attacking, Alpha Beta pruning decides to take my knight - an even trade.
+
+<pre>
 Please enter your move: 
 b2c3
 True
