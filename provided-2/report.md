@@ -551,3 +551,51 @@ The evaluation function used is a measure of the difference in material based on
 I sorted the list of legal moves with the line `moves.sort(key = lambda move: self.heuristic(board, move = move), reverse=True)` which sorts the moves in largest smallest points difference ('winning' to 'losing' positions).
       
 4) (iterative deepening) Verify that for some start states, best_move changes (and hopefully improves) as deeper levels are searched. Discuss the observations in your document.
+
+For Minimax, the moves improved like so:
+ </pre>
+22
+g8h6
+603
+g8f6
+13619
+g8h6
+388425
+e7e6
+r n b q k b n r
+p p p p . p p p
+. . . . p . . .
+. . . . . . . .
+. . . P . . . .
+. . . . . . . .
+P P P . P P P P
+R N B Q K B N R
+----------------
+a b c d e f g h
+ </pre>
+ The numbers represent the numbers of nodes visited, and with iterative deepening the move improved - the French Defense is significantly better than g8h6 - moving the knight to the edge of the board.
+
+Since i implemented Iterative deepening in a search agnostic fashion, I also examined how Iterative deepening worked with Alpha Beta pruning:
+
+<pre>
+22
+g8h6
+117
+g8f6
+1023
+g8h6
+5846
+e7e6
+r n b q k b n r
+p p p p . p p p
+. . . . p . . .
+. . . . . . . .
+. . . P . . . .
+. . . . . . . .
+P P P . P P P P
+R N B Q K B N R
+----------------
+a b c d e f g h
+</pre>
+
+The same improvements were made, albeit with shorter nodes visited.
