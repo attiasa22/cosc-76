@@ -19,7 +19,7 @@ player3 = MinimaxAI(depth = 4)
 player4 = AlphaBetaAI(depth = 4)
 player5 = IterativeAI(player4, 5)
 
-game = ChessGame(player1, player5)
+game = ChessGame(player1, player4)
 
 while not game.is_game_over():
     print(game)

@@ -29,7 +29,7 @@ class AlphaBetaAI():
             return self.heuristic(board), board.peek()
 
         moves = list(board.legal_moves)
-        moves.sort(key = lambda move: self.heuristic(board, move = move))
+        moves.sort(key = lambda move: self.heuristic(board, move = move), reverse=True)
         value = float("-inf")
         best_move = None
         value = alpha
