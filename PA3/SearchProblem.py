@@ -1,63 +1,63 @@
 from copy import deepcopy
 
-def SearchProblem():
-    def __init__(self, search_problem, variable_heuristic = None , value_heuristic = None, inference = 0):
+class SearchProblem():
+    def __init__(self, search_problem = None, variable_heuristic = None , value_heuristic = None, inference = 0):
         self.search_problem = search_problem 
         self.variable_heuristic = variable_heuristic
         self.value_heuristic = value_heuristic
 
 
-    def backtracking_search(self,):
-        return backtrack(self.search_problem, self.search_problem.assignment)
+    def backtracking_search(self):
+        return self.backtrack(self.search_problem, self.search_problem.assignment)
     
     def backtrack(self, csp, assignment):
-        if assignment_complete(assignment):
+        if self.assignment_complete(csp,assignment):
             return assignment
         
-        current_variable = select_unassigned_variable(csp, assignment, self.variable_heuristic)
-        csp_copy = deepcopy()
+        current_variable = self.select_unassigned_variable(csp, assignment, self.variable_heuristic)
+        csp_copy = deepcopy(csp)
 
-        for value in order_domain_values(csp,current_variable,assignment, self.value_heuristic):
+        for value in self.order_domain_values(csp,current_variable,assignment, self.value_heuristic):
             
-            if self.search_problem.consistency_check(assignment, csp, current_variable. value):
+            if csp.consistency_check(assignment, csp, current_variable, value):
                 assignment[current_variable] = value
 
-                if inference:
+                if self.inference:
 
-                    inferences = inference(csp, current_variable, assignment)
+                    inferences = self.inference(csp, current_variable, assignment)
 
-                    if not check_inference_failure(inferences):
-                        add_inferences(inferences, csp)
-                        result = backtrack(csp, assignment)
+                    if not self.check_inference_failure(inferences):
+                        self.add_inferences(inferences, csp)
+                        result = self.backtrack(csp, assignment)
 
-                        if check_csp_failure(result):
+                        if self.check_csp_failure(result):
                             return result
                 else:
-                    result = backtrack(csp, assignment)
+                    result = self.backtrack(csp, assignment)
 
                     #if check_csp_failure(result):
                     return result
 
                 csp = csp_copy
-
-        return 'FAILURE'
+                
+        return assignment
 
     #compare the set of variables to the set of assignments made
-    def assignment_complete(self,assignment):
-        if self.search_problem.variables == set(assignment.keys()):
+    def assignment_complete(self,csp,assignment):
+        if csp.variables == set(assignment.keys()):
             return 1
         return 0
 
     def select_unassigned_variable(self, csp, assignment, heuristic):
         if heuristic is None:
-            unassigned_variables = self.search_problem.variables.difference(set(assignment.keys()))
+            unassigned_variables = csp.variables.difference(set(assignment.keys()))
             return list(unassigned_variables)[0]
         else:
             return heuristic(csp, assignment)
     
     def order_domain_values(self, csp,current_variable,assignment, heuristic):
         if heuristic is None:
-            unassigned_values = self.search_problem.values
+            unassigned_values = csp.domain[current_variable]
             return list(unassigned_values)
         else:
             return heuristic(csp, assignment)
