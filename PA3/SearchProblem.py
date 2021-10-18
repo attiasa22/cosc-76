@@ -13,7 +13,7 @@ class SearchProblem():
     def backtrack(self, csp, assignment):
         if self.assignment_complete(csp,assignment):
             return assignment
-        
+
         current_variable = self.select_unassigned_variable(csp, assignment, self.variable_heuristic)
         csp_copy = deepcopy(csp)
 
@@ -21,7 +21,7 @@ class SearchProblem():
             
             if csp.consistency_check(assignment, csp, current_variable, value):
                 assignment[current_variable] = value
-
+                csp.domain[current_variable] = [value]
                 if self.inference:
 
                     inferences = self.inference(csp, current_variable, assignment)
@@ -39,7 +39,7 @@ class SearchProblem():
                     return result
 
                 csp = csp_copy
-                
+
         return assignment
 
     #compare the set of variables to the set of assignments made
@@ -53,14 +53,52 @@ class SearchProblem():
             unassigned_variables = csp.variables.difference(set(assignment.keys()))
             return list(unassigned_variables)[0]
         else:
-            return heuristic(csp, assignment)
+            return eval("self.%s"%heuristic)(csp, assignment)
     
     def order_domain_values(self, csp,current_variable,assignment, heuristic):
         if heuristic is None:
             unassigned_values = csp.domain[current_variable]
             return list(unassigned_values)
         else:
-            return heuristic(csp, assignment)
+            return eval("self.%s"%heuristic)(csp, current_variable)
+            
+    def mrv(self, csp, assignment):
+        relevant_variables = {}
+        domain_copy = deepcopy(csp.domain)
+        for key in assignment.keys():
+            for neighbors in csp.graph[key]:
+                if assignment[key] in domain_copy[neighbors]:
+                    domain_copy[neighbors].remove(assignment[key])
+                if len(domain_copy[neighbors])>1:
+                    relevant_variables[neighbors]=len(domain_copy[neighbors])
+
+        if len(relevant_variables.keys()) >0:
+            return min(relevant_variables.items(), key= lambda x: x[1])[0]
+        unassigned_variables = csp.variables.difference(set(assignment.keys()))
+        return list(unassigned_variables)[0]
+         
+    
+    def degree_heuristic(self,csp,assignment):
+        relevant_variables = {}
+        for variable in csp.graph.keys():
+            if variable not in assignment.keys():
+                relevant_variables[variable]=len(csp.graph[variable])
+        return max(relevant_variables.items(), key= lambda x: x[1])[0]
+
+    def lcv(self,csp, current_variable):
+        relevant_values={}
+        for value in csp.domain[current_variable]:
+            for neighbor in csp.graph[current_variable]:
+                if value in csp.domain[neighbor]:
+                    if value in relevant_values:
+                        relevant_values[value]=relevant_values[value]+1
+                    else:
+                        relevant_values[value]=1
+        if len(relevant_values.keys())>0:    
+            return sorted(relevant_values,key= relevant_values.get)
+        else:
+            unassigned_values = csp.domain[current_variable]
+            return list(unassigned_values)
 
     def inference(self, csp, current_variable,assignment):
         pass
