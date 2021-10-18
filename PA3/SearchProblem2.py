@@ -12,16 +12,21 @@ class SearchProblem():
     
     def backtrack(self, csp, assignment):
         if self.assignment_complete(csp,assignment):
+
             return assignment
 
         current_variable = self.select_unassigned_variable(csp, assignment, self.variable_heuristic)
-        csp_copy = deepcopy(csp)
+        
 
         for value in self.order_domain_values(csp,current_variable,assignment, self.value_heuristic):
             
+            print(value)
+            print("ASSIGNMENT")
+            print(assignment)
             if csp.consistency_check(assignment, csp, current_variable, value):
                 assignment[current_variable] = value
                 csp.domain[current_variable] = [value]
+                
                 if self.inference:
 
                     inferences = self.inference(csp, current_variable, assignment)
@@ -33,14 +38,21 @@ class SearchProblem():
                         if self.check_csp_failure(result):
                             return result
                 else:
+                
                     result = self.backtrack(csp, assignment)
-
+                    
                     #if check_csp_failure(result):
-                    return result
-
-                csp = csp_copy
-
-        return assignment
+                    if result !="FAILURE":
+                        return result
+                    
+                
+                    del assignment[current_variable]
+                    csp.domain[current_variable] = csp.values
+        #print(assignment)
+        #if len(assignment.keys())==len(csp.variables):
+        #    return result
+        #csp = csp_copy
+        return "FAILURE"
 
     #compare the set of variables to the set of assignments made
     def assignment_complete(self,csp,assignment):
@@ -51,6 +63,8 @@ class SearchProblem():
     def select_unassigned_variable(self, csp, assignment, heuristic):
         if heuristic is None:
             unassigned_variables = csp.variables.difference(set(assignment.keys()))
+            print("UNASSIGNED")
+            print(unassigned_variables)
             return list(unassigned_variables)[0]
         else:
             return eval("self.%s"%heuristic)(csp, assignment)
@@ -58,6 +72,7 @@ class SearchProblem():
     def order_domain_values(self, csp,current_variable,assignment, heuristic):
         if heuristic is None:
             unassigned_values = csp.domain[current_variable]
+            #print(unassigned_values)
             return list(unassigned_values)
         else:
             return eval("self.%s"%heuristic)(csp, current_variable)
