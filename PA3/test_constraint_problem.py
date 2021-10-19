@@ -1,5 +1,6 @@
 from SearchProblem import SearchProblem
 from MapColoring import MapColoring
+#from CircuitBoardFitting import CircuitBoardFitting
 
 australia = {"WA": ["NT","SA"], 
              "NT": ["WA","SA","Q"],
@@ -11,7 +12,16 @@ australia = {"WA": ["NT","SA"],
              }
 
 map1 = MapColoring(australia, 3)
-print(SearchProblem(search_problem = map1).backtracking_search())
+
+
+#print(SearchProblem(search_problem = map1).backtracking_search())
 print(SearchProblem(search_problem = map1, variable_heuristic = "mrv").backtracking_search())
-print(SearchProblem(search_problem = map1, variable_heuristic = "degree_heuristic").backtracking_search())
-print(SearchProblem(search_problem = map1,value_heuristic="lcv").backtracking_search())
+#print(SearchProblem(search_problem = map1, variable_heuristic = "degree_heuristic").backtracking_search())
+#print(SearchProblem(search_problem = map1,value_heuristic="lcv").backtracking_search())
+
+chips ={"a": [],
+        "b": [],
+        "c": [],
+        "d": []}
+#print()
+#print(SearchProblem(search_problem = map1).backtracking_search())
