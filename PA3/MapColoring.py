@@ -11,3 +11,6 @@ class MapColoring():
             if key in csp.graph[current_variable] and assignment[key] == value:
                 return 0
         return 1
+
+    def revise_check(self, value2, value):
+        return value != value2
