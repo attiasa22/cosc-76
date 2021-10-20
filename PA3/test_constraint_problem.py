@@ -33,6 +33,7 @@ chips ={"a": [2,3],
         "c": [3,2],
         "e": [1,7]}
 
-circuit_board = CircuitBoardFitting(3,10,chips)
+#circuit_board = CircuitBoardFitting(3,10,chips)
 circuit_board2 = CircuitBoardFitting2(3,10,chips)
 print(SearchProblem(search_problem = circuit_board2).backtracking_search())
+circuit_board2.draw_board()
