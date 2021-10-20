@@ -10,7 +10,8 @@ def select_unassigned_variable(csp, assignment, heuristic):
 
 def order_domain_values(csp,current_variable,assignment, heuristic):
     if heuristic is None:
-        unassigned_values = csp.domain[current_variable]
+        #unassigned_values = csp.domain[current_variable]
+        unassigned_values = csp.values
         return list(unassigned_values)
     else:
         return eval("%s"%heuristic)(csp, current_variable)
