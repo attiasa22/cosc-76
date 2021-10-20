@@ -14,3 +14,11 @@ class MapColoring():
 
     def revise_check(self, value2, value):
         return value != value2
+
+    def fix_domains(self):
+        pass
+
+    def assignment_complete(self,csp,assignment):
+        if csp.variables == set(assignment.keys()):
+            return 1
+        return 0

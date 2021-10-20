@@ -13,7 +13,7 @@ def order_domain_values(csp,current_variable,assignment, heuristic):
         unassigned_values = csp.domain[current_variable]
         return list(unassigned_values)
     else:
-        return eval("self.%s"%heuristic)(csp, current_variable)
+        return eval("%s"%heuristic)(csp, current_variable)
         
 def mrv(csp, assignment):
     relevant_variables = {}
@@ -54,3 +54,4 @@ def lcv(csp, current_variable):
         #print("unassigned")
         unassigned_values = csp.values
         return list(unassigned_values)
+
