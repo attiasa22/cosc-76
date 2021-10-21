@@ -12,13 +12,13 @@ class SearchProblem():
         return self.backtrack(self.search_problem, self.search_problem.assignment)
     
     def backtrack(self, csp, assignment):
-        
+        self.state_visited+=1
         if csp.assignment_complete(csp,assignment):
+            print(self.state_visited)
             return assignment
 
         current_variable = select_unassigned_variable(csp, assignment, self.variable_heuristic)
-       # print(current_variable)
-        #print(order_domain_values(csp,current_variable,assignment, self.value_heuristic))
+
         for value in order_domain_values(csp,current_variable,assignment, self.value_heuristic):
             if csp.consistency_check(assignment, csp, current_variable, value):
                 assignment[current_variable] = value
@@ -76,7 +76,7 @@ class SearchProblem():
         for value in csp.domain[Xi]:
             conflict = True
             for value2 in csp.domain[Xj]:
-                if csp.revise_check(value2, value):
+                if value != value2:
                     conflict = False
                     break
             if conflict:

@@ -6,6 +6,16 @@ class CircuitBoardFitting():
         self.assignment = {}
         self.variables = set(self.initialize_variables(height,width))
         self.domain = self.initialize_domains(self.variables, chips)
+        self.graph = self.create_graph(self.values)
+    def create_graph(self, chips):
+        graph = {k:[] for k in chips.keys()}
+        
+        for key in graph.keys():
+
+            graph[key] = list(set(graph.keys()).difference(set(key)))
+
+        print(graph)
+        return graph
 
     def initialize_variables(self, height,width):
         variables=[]
@@ -35,7 +45,7 @@ class CircuitBoardFitting():
         top_y = current_variable[0]+self.values[value][0]
 
         overlaps = False
-
+        out_of_bounds = False
         for key in assignment.keys():
             left_x2 = key[1]
             bottom_y2 = key[0]
@@ -44,8 +54,10 @@ class CircuitBoardFitting():
 
             if not (left_x2>right_x or left_x>right_x2 or bottom_y2>top_y or bottom_y>top_y2):
                 overlaps = True
+            if top_y>self.height or  right_x>self.width:
+                 out_of_bounds = True
 
-        if overlaps:
+        if overlaps or out_of_bounds:
             return False
         return True
 
