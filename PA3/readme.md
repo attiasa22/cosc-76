@@ -18,4 +18,8 @@ Installation: Unzip the files into your preferred location on your computer.
  2. Pass the chips and the dimensions of the circuit board into a new CircuitBoardFitting instance, `circuit_board = CircuitBoardFitting(3,10,chips)`
 
 
-Pass either instance into a `SearchProblem`, and print `backtracking_search()` of that instance to see the assignment. For example, `print(SearchProblem(search_problem = map1).backtracking_search())`. To use heuristics, simply pass in "mrv", "degree_heuristic," or "lcv" as a `variable_heuristic`, like `print(SearchProblem(search_problem = map1, variable_heuristic = "mrv").backtracking_search())`. To use inferencing, declare `should_inference = True`, like `print(SearchProblem(search_problem = map1, should_inference = True).backtracking_search())`
+Pass either instance into a `SearchProblem`, and print `backtracking_search()` of that instance to see the assignment. For example, `print(SearchProblem(search_problem = map1).backtracking_search())`. 
+
+To use heuristics, simply pass in "mrv", "degree_heuristic," or "lcv" as a `variable_heuristic`, like `print(SearchProblem(search_problem = map1, variable_heuristic = "mrv").backtracking_search())`. 
+
+To use inferencing, declare `should_inference = True`, like `print(SearchProblem(search_problem = map1, should_inference = True).backtracking_search())`
