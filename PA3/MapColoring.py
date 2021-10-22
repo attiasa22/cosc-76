@@ -7,18 +7,12 @@ class MapColoring():
         self.domain = {k:self.values for k in self.variables}
 
     def consistency_check(self, assignment, csp, current_variable, value):
+        # The graph is not constistent if there exists an assignment which shares the same value with the its neighbor
         for key in assignment.keys():
             if key in csp.graph[current_variable] and assignment[key] == value:
                 return 0
-        return 1
 
-    def revise_check(self, value2, value):
-        return value != value2
+        return 1
 
     def fix_domains(self):
         pass
-
-    def assignment_complete(self,csp,assignment):
-        if csp.variables == set(assignment.keys()):
-            return 1
-        return 0

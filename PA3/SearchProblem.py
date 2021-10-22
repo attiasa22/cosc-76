@@ -1,4 +1,5 @@
 from heuristics import select_unassigned_variable, order_domain_values
+from inferences import inference, add_inferences, remove_inferences
 
 class SearchProblem():
     def __init__(self, search_problem = None, variable_heuristic = None , value_heuristic = None, should_inference = False):
@@ -11,101 +12,52 @@ class SearchProblem():
     def backtracking_search(self):
         return self.backtrack(self.search_problem, self.search_problem.assignment)
     
-    def backtrack(self, csp, assignment):
-        self.state_visited+=1
-        if csp.assignment_complete(csp,assignment):
+    def backtrack(self, csp, assignment): # returns a solution or failure
+        self.state_visited += 1
+        # if assignment is complete then return it
+        if self.assignment_complete(csp,assignment):
             print(self.state_visited)
             return assignment
 
+        # select an unassigned variable
         current_variable = select_unassigned_variable(csp, assignment, self.variable_heuristic)
-
+        # for each value in the variable's ordered domain
         for value in order_domain_values(csp,current_variable,assignment, self.value_heuristic):
+            # if the value is consistent with the current assignment
             if csp.consistency_check(assignment, csp, current_variable, value):
+                # add the variable - value pair to the assignment
                 assignment[current_variable] = value
                 csp.domain[current_variable] = [value]
-                csp.fix_domains()
+
+                # if the user would like to inference
                 if self.should_inference:
-                    
-                    inference, domain_removal = self.inference(csp)
+                    # determine if the inference should be done, as well as the inferences made
+                    inference, domain_removal = inference(csp)
 
                     if inference: # if inferences don't lead to failure
-
-                        assignment_additions = self.add_inferences(csp, assignment) # add inferences
+                        
+                        assignment_additions = add_inferences(csp, assignment) # add inferences
                         result = self.backtrack(csp, assignment) # back track
 
-                        if result != "FAILURE": # if result isn't a failure
+                        if result != "FAILURE":
                             return result
-                        #remove inferences from csp
-                        self.remove_inferences(csp, assignment, domain_removal, assignment_additions)
+                        # if result is failure, remove inferences from csp
+                        remove_inferences(csp, assignment, domain_removal, assignment_additions)
                     #remove current variable assignment
                     if current_variable in assignment:
                         del assignment[current_variable]
                     csp.domain[current_variable] = csp.values
                 else:
-                    #self.state_visited+=1
                     result = self.backtrack(csp, assignment)
                    
                     if result != "FAILURE":
                         return result
                     del assignment[current_variable]
                     csp.domain[current_variable] = csp.values
-                csp.fix_domains()
 
         return "FAILURE"
 
-    def inference(self, csp, queue=None):
-        queue = {(Xi,Xj) for Xi in list(csp.variables) for Xj in csp.graph[Xi]}
-
-        while queue:
-            (Xi,Xj) = queue.pop()
-            revised, domain_removal = self.revise(csp,Xi,Xj)
-            if revised:
-                if len(csp.domain[Xi])==0:
-                    return False, domain_removal
-                for neighbor in csp.graph[Xi]:
-                    if neighbor != Xj:
-                        queue.add((neighbor,Xi))
-            else:
-                csp.domain[Xi]+=[domain_removal[1]]
-        return True, domain_removal
-
-    
-    def revise(self, csp, Xi, Xj):
-        revised = False
-        domain_removal = [Xi,0]
-        for value in csp.domain[Xi]:
-            conflict = True
-            for value2 in csp.domain[Xj]:
-                if value != value2:
-                    conflict = False
-                    break
-            if conflict:
-                csp.domain[Xi].remove(value)
-                revised = True
-                domain_removal[1]=value
-
-
-        return revised, domain_removal
-
-
-    def add_inferences(self, csp, assignment):
-        assignment_additions = []
-
-        for variable in csp.domain.keys():
-            
-            if len(csp.domain[variable])==1:
-                assignment[variable]=csp.domain[variable][0]
-                assignment_additions+=[variable]
-
-        return assignment_additions
-
-    def remove_inferences(self, csp, assignment, domain_removal, assignment_additions):
-        # domain_removals = {k:[] for k in csp.variables}
-        # assignment_additions = []
-
-        if domain_removal[1] not in csp.domain[domain_removal[0]]:
-            csp.domain[domain_removal[0]]+=[domain_removal[1]]
-
-        for variable in list(assignment.keys()):
-            if variable in assignment_additions:
-                del assignment[variable]
+    def assignment_complete(self,csp,assignment):
+        if csp.variables == set(assignment.keys()):
+            return 1
+        return 0
