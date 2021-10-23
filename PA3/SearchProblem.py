@@ -1,5 +1,5 @@
 from heuristics import select_unassigned_variable, order_domain_values
-from inferences import inference, add_inferences, remove_inferences
+from inferences import inferencing, add_inferences, remove_inferences
 
 class SearchProblem():
     def __init__(self, search_problem = None, variable_heuristic = None , value_heuristic = None, should_inference = False):
@@ -13,12 +13,11 @@ class SearchProblem():
         return self.backtrack(self.search_problem, self.search_problem.assignment)
     
     def backtrack(self, csp, assignment): # returns a solution or failure
-        self.state_visited += 1
         # if assignment is complete then return it
         if self.assignment_complete(csp,assignment):
             print(self.state_visited)
             return assignment
-
+        self.state_visited += 1
         # select an unassigned variable
         current_variable = select_unassigned_variable(csp, assignment, self.variable_heuristic)
         # for each value in the variable's ordered domain
@@ -32,21 +31,18 @@ class SearchProblem():
                 # if the user would like to inference
                 if self.should_inference:
                     # determine if the inference should be done, as well as the inferences made
-                    inference, domain_removal = inference(csp)
-
+                    inference, removed = inferencing(csp)
                     if inference: # if inferences don't lead to failure
-                        
-                        assignment_additions = add_inferences(csp, assignment) # add inferences
+                        assignment_additions = add_inferences(csp) # add inferences
                         result = self.backtrack(csp, assignment) # back track
 
                         if result != "FAILURE":
                             return result
                         # if result is failure, remove inferences from csp
-                        remove_inferences(csp, assignment, domain_removal, assignment_additions)
+                        remove_inferences(csp, removed)
                     #remove current variable assignment
                     if current_variable in assignment:
                         del assignment[current_variable]
-                    csp.domain[current_variable] = csp.values
                 else:
                     result = self.backtrack(csp, assignment)
                    

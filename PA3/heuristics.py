@@ -26,7 +26,7 @@ def mrv(csp, assignment):
                 csp.domain[neighbors].remove(assignment[key])
             if len(csp.domain[neighbors])>1:
                 relevant_variables[neighbors]=len(csp.domain[neighbors])
-    print(relevant_variables)
+
     if len(relevant_variables.keys()) >0:
         return min(relevant_variables.items(), key= lambda x: x[1])[0]
 
