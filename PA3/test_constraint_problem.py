@@ -29,8 +29,8 @@ map2 = MapColoring(easy, 3)
 #print(SearchProblem(search_problem = map1).backtracking_search())
 #print(SearchProblem(search_problem = map1, variable_heuristic = "mrv").backtracking_search())
 #print(SearchProblem(search_problem = map1, variable_heuristic = "degree_heuristic").backtracking_search())
-print(SearchProblem(search_problem = map1,value_heuristic="lcv").backtracking_search())
-#print(SearchProblem(search_problem = map1, should_inference = True).backtracking_search())
+#print(SearchProblem(search_problem = map1,value_heuristic="lcv").backtracking_search())
+print(SearchProblem(search_problem = map1, should_inference = True).backtracking_search())
 
 #print(SearchProblem(search_problem = map2, should_inference = True).backtracking_search())
 
@@ -45,6 +45,6 @@ chips ={"a": [2,3],
 
 #circuit_board = CircuitBoardFitting(3,10,chips)
 circuit_board = CircuitBoardFitting(3,10,chips)
-print(SearchProblem(search_problem = circuit_board,should_inference = True).backtracking_search())
+#print(SearchProblem(search_problem = circuit_board,should_inference = True).backtracking_search())
 #After solving the circuit board problem, print out the solution with draw_board()
 circuit_board.draw_board()

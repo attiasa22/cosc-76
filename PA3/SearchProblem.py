@@ -39,7 +39,7 @@ class SearchProblem():
                         if result != "FAILURE":
                             return result
                         # if result is failure, remove inferences from csp
-                        remove_inferences(csp, removed)
+                    remove_inferences(csp, removed)
                     #remove current variable assignment
                     if current_variable in assignment:
                         del assignment[current_variable]

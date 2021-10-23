@@ -33,7 +33,7 @@ def revise(csp, Xi, Xj):
 
             relevant_domain = csp.domain[Xi]
             relevant_domain.remove(value)
-
+    print(csp.domain)
     return revised, removed_value
 
 def add_inferences(csp):
