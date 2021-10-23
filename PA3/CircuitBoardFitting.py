@@ -42,11 +42,10 @@ class CircuitBoardFitting():
         overlaps = False
         # For each already assigned chip
         for key in assignment.keys():
-
-            left_x2 = assignment[key][0][1]
-            bottom_y2 = assignment[key][0][0]
-            right_x2 = self.chips[key][1]+assignment[key][0][1]
-            top_y2 = self.chips[key][0]+assignment[key][0][0]
+            left_x2 = assignment[key][1]
+            bottom_y2 = assignment[key][0]
+            right_x2 = self.chips[key][1]+assignment[key][1]
+            top_y2 = self.chips[key][0]+assignment[key][0]
             # If the chips are overlapping
             if not (left_x2>=right_x or left_x>=right_x2 or bottom_y2>=top_y or bottom_y>=top_y2):
                 overlaps = True
@@ -70,10 +69,10 @@ class CircuitBoardFitting():
                 added_letter=False
                 # Check each chip for this coordinate
                 for key in assignment.keys():
-                    left_x = assignment[key][0][1]
-                    bottom_y = assignment[key][0][0]
-                    right_x = self.chips[key][1]+assignment[key][0][1]
-                    top_y = self.chips[key][0]+assignment[key][0][0]
+                    left_x = assignment[key][1]
+                    bottom_y = assignment[key][0]
+                    right_x = self.chips[key][1]+assignment[key][1]
+                    top_y = self.chips[key][0]+assignment[key][0]
 
                     if i<top_y and i>= bottom_y and j>=left_x and j<right_x:
                         string+=key

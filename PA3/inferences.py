@@ -33,13 +33,13 @@ def revise(csp, Xi, Xj):
 
             relevant_domain = csp.domain[Xi]
             relevant_domain.remove(value)
-    print(csp.domain)
+
     return revised, removed_value
 
 def add_inferences(csp):
     for key in csp.domain.keys():
         if len(csp.domain[key]) == 1:
-            csp.assignment[key] = csp.domain[key]
+            csp.assignment[key] = csp.domain[key][0]
 
 def remove_inferences(csp, removed):
     removed = list(filter(None, removed))
