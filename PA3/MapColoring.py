@@ -13,6 +13,3 @@ class MapColoring():
                 return 0
 
         return 1
-
-    def fix_domains(self):
-        pass
