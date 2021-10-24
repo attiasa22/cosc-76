@@ -42,10 +42,10 @@ chips ={"a": [2,3],
         "e": [1,7]}
 
 #Create a circuit board with the chips and the heigh and width of the board
-
-#circuit_board = CircuitBoardFitting(3,10,chips)
 circuit_board = CircuitBoardFitting(3,10,chips)
+
 #print(SearchProblem(search_problem = circuit_board, variable_heuristic = "degree_heuristic").backtracking_search())
 print(SearchProblem(search_problem = circuit_board, variable_heuristic = "degree_heuristic", value_heuristic="lcv", should_inference = True).backtracking_search())
+
 #After solving the circuit board problem, print out the solution with draw_board()
 circuit_board.draw_board()

@@ -38,7 +38,7 @@ def lcv(csp, current_variable):
                 if value in relevant_values:
                     relevant_values[value]=relevant_values[value]+1
     
-    if len(relevant_values.keys())>0:
-        return sorted(relevant_values,key= relevant_values.get, reverse=False)
+    if len(relevant_values.keys()) > 0:
+        return sorted(relevant_values,key = relevant_values.get, reverse = False)
 
     return list(csp.values)

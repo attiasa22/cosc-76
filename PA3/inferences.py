@@ -6,14 +6,15 @@ def inferencing(csp, queue=None): # AC3 algorithm
         (Xi,Xj) = queue.pop() 
         revised, removed_value = revise(csp, Xi, Xj)
 
-        removed+=removed_value
+        removed += removed_value
+
         if revised:
             if len(csp.domain[Xi]) == 0:
                 return False, removed
 
             for neighbor in csp.graph[Xi]:
                 if neighbor != Xj:
-                    queue+=[(neighbor, Xi)]
+                    queue += [(neighbor, Xi)]
 
     return True, removed
 

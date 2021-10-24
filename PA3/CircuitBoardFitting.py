@@ -20,12 +20,12 @@ class CircuitBoardFitting():
 
     # Each chip's domain contains all the possible lower left corners it can be
     def initialize_domains(self, variables, width,height):
-        domains ={k:[] for k in variables}
+        domains = {k:[] for k in variables}
         for i in range(height):
             for j in range(width):
                 for variable in variables:
-                        if self.chips[variable][0]+i<=self.height and self.chips[variable][1]+j<=self.width:
-                            domains[variable]+=[(i,j)]
+                        if self.chips[variable][0]+i <= self.height and self.chips[variable][1]+j<=self.width:
+                            domains[variable] += [(i,j)]
 
         return domains
 
@@ -34,7 +34,7 @@ class CircuitBoardFitting():
         consistent = True
         # Find the coordinates of each edge
         left_x = value[1]
-        bottom_y =value[0]
+        bottom_y = value[0]
         right_x = self.chips[current_variable][1] + value[1]
         top_y = self.chips[current_variable][0] + value[0]
 
@@ -63,7 +63,7 @@ class CircuitBoardFitting():
         assignment = self.assignment
         #Go top row to bottom row
         for i in range(self.height-1,-1, -1):
-            string=""
+            string = ""
             # Left to right
             for j in range(self.width):
                 added_letter=False
@@ -75,11 +75,11 @@ class CircuitBoardFitting():
                     top_y = self.chips[key][0]+assignment[key][0]
 
                     if i<top_y and i>= bottom_y and j>=left_x and j<right_x:
-                        string+=key
-                        added_letter=True
+                        string += key
+                        added_letter = True
 
                 if not added_letter:
-                    string+="."
+                    string += "."
 
             print(string)
                 
