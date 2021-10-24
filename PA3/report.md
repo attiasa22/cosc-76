@@ -19,10 +19,10 @@ For code clarity, I split my code into the the following classes and/or files:
 
 My algorithms work well, and follow the pseudocode very closely. This chart summarizes the number of times the algorithm backtracked with the relevant heuristics
 
-| Problem      | No Heuristics | MRV    | LCV      | Degree Heuristic | Inferencing    |
-| :---        |    :----:   |    :----:   |    :----:   | :----:   |          ---: |
-| Map Coloring      | 7       | 7   | 7       | 7   | 4   |
-| Circuit Board   | 4        | 4      | 4   | 4        | 4      |
+| Problem      | No Heuristics | MRV    | LCV      | Degree Heuristic | Inferencing    | Degree Heuristic & Inferencing    |
+| :---        |    :----:   |    :----:   |    :----:   | :----:   |  :----:   |          ---: |
+| Map Coloring      | 7       | 7   | 7       | 7   | 4   | 3   |
+| Circuit Board   | 4        | 4      | 4   | 4        | 4      | 4|
 
 Without inferencing, since No heuristics are needed to already achieve the minimum possible number of backtracks (the number of variables), the heuristic functions are not very helpful. However, inferencing is very helpful for the Map coloring problem, as only 4 regions are visited before a solution is found.
 
@@ -56,4 +56,37 @@ For example, a 2x3 piece on a 10x10 board can fit
 
 **(circuit-board) Consider components a and b above, on a 10x3 board.  In your write-up, write the constraint that enforces the fact that the two components may not overlap.  Write out legal pairs of locations explicitly.**
 
+a - 3x2 \
+b - 5x2 
+
+Given the left, right, bottom, and top edges of both chips, we enforce the non-overlapping condition like so
+
+    if not (left_x2>=right_x or left_x>=right_x2 or bottom_y2>=top_y or bottom_y>=top_y2):
+    
+                                overlaps = True
+In english if the left edge of a box is not to the right of the right edge of the other, or vice versa, or the bottom edge of a box is not above the top of the other box, or vice versa, they must be overlapping.
+
+For boxes a and b on board 10x3, this leads to the following pairs of locations for the lower left corner of each chip.
+
+
+| a   |       b | 
+| :---|     ---:|
+| (0,0) or (0,1)| (3,0) or (4,0) or (5,0) or (3,1) or (4,1) or (5,1)| 
+| (1,0) or (1,1)| (4,0) or (5,0) or (4,1) or (5,1)        |
+| (2,0) or (2,1)| (5,0) or (5,1)       | 
+| (3,0) or (3,1)| NONE        |
+| (4,0) or (4,1)| NONE       | 
+| (5,0) or (5,1)| (0,0) or (0,1)|
+| (6,0) or (6,1)| (0,0) or (1,0) or (0,1) or (1,1)| 
+| (7,0) or (7,1)| (0,0) or (1,0) or (2,0) or (0,1) or (1,1) or (2,1)|
+
+
 **(circuit-board) Describe how your code converts constraints, etc, to integer values for use by the generic CSP solver.**
+
+For sake of clarity and generality, the constraints are completely abstracted away as a calculation done by the Circuit Board class, and the math only leads to a boolean from the perspective of the CSP.
+
+Within the constraint function, the location of the lower left corner and the chip size are converted to edge locations, which can then be compared to each other.
+
+With Python and the implementation of the dictionary, there is no need to convert variables (chip names or province names), to integers. 
+
+Values, which are tuples representing coordinates, can also be kept as they are.
