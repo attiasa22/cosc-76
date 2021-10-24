@@ -16,28 +16,10 @@ def order_domain_values(csp,current_variable,assignment, heuristic):
         return list(unassigned_values)
 
     return sorted(eval("%s"%heuristic)(csp, current_variable))
-'''     
-def mrv(csp, assignment):
-    relevant_variables = {}
 
-    for key in assignment.keys():
-        for neighbors in csp.graph[key]:
-            if assignment[key] in csp.domain[neighbors]:
-                csp.domain[neighbors].remove(assignment[key])
-            if len(csp.domain[neighbors])>1:
-                relevant_variables[neighbors]=len(csp.domain[neighbors])
-
-    if len(relevant_variables.keys()) >0:
-        return min(relevant_variables.items(), key= lambda x: x[1])[0]
-
-    unassigned_variables = csp.variables.difference(set(assignment.keys()))
-    return sorted(list(unassigned_variables))[0] 
-'''
 def mrv(csp, assignment):
     remaining_variables = sorted(list(set(csp.variables).difference(set(assignment.keys()))))
     return sorted(remaining_variables, key = lambda x: len(csp.domain[x]), reverse = True)[0]
-
-
 
 def degree_heuristic(csp,assignment):
     relevant_variables = {}
