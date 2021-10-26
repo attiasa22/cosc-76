@@ -9,18 +9,18 @@ class SAT:
          # input: a set of clauses a, max flips, and max tries
         # output: if found, a truth assignment of a
         variables, clauses = self.read_cnf()
-        h = 0.3
+        h = 0.9
         seed(1)
         for i in range(10000):
             print(i)
             # Start with a random assignment
             T = {variable:randint(0, 1) for variable in variables}
 
-            for j in range(10000):
+            for j in range(100000):
                 print(j)
-                # if T satisfies a then return T
+               
                 satisfied, unsatisfied_clauses = self.find_unsatisfied_clauses(T, clauses)
-                
+                 # if T satisfies a then return T
                 if satisfied:
                     self.solution = T
                     return T
@@ -174,4 +174,3 @@ class SAT:
                      f.write(variable+"\n")
                 else:
                     f.write("-%s"%variable+"\n")
-
