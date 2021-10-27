@@ -9,7 +9,7 @@ class SAT:
          # input: a set of clauses a, max flips, and max tries
         # output: if found, a truth assignment of a
         variables, clauses = self.read_cnf()
-        h = 0.9
+        h = 0.7
         seed(1)
         for i in range(10000):
             print(i)
@@ -107,7 +107,7 @@ class SAT:
             elif satisfied_clauses > max_satisfied_clauses:
                 potential_p = [variable]
                 max_satisfied_clauses = satisfied_clauses
-
+            
             #flip variable back for next loop
             T[variable] = (T[variable] + 1) % 2
 
