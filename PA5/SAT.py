@@ -11,12 +11,14 @@ class SAT:
         variables, clauses = self.read_cnf()
         h = 0.7
         seed(1)
-        for i in range(10000):
+        max_tries = 10000
+        for i in range(max_tries):
             print(i)
             # Start with a random assignment
             T = {variable:randint(0, 1) for variable in variables}
 
-            for j in range(100000):
+            max_flips = 100000
+            for j in range(max_flips):
                 print(j)
                
                 satisfied, unsatisfied_clauses = self.find_unsatisfied_clauses(T, clauses)
@@ -107,7 +109,7 @@ class SAT:
             elif satisfied_clauses > max_satisfied_clauses:
                 potential_p = [variable]
                 max_satisfied_clauses = satisfied_clauses
-            
+
             #flip variable back for next loop
             T[variable] = (T[variable] + 1) % 2
 
