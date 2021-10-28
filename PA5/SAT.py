@@ -35,7 +35,7 @@ class SAT:
                     # gives the largest increase in the total number of clauses of a that are
                     # satisfies by T
                     
-                    p = self.find_p_walksat(T, clauses, clause)
+                    p = self.find_p(T, clauses, clause)
 
                     # T = T with p reversed
                     T[p] = (T[p] + 1) % 2 
@@ -47,7 +47,7 @@ class SAT:
         # output: if found, a truth assignment of a
 
         variables, clauses = self.read_cnf()
-        h = 0.3
+        h = 0.7
         seed(1)
         for i in range(max_tries):
             print(i)
@@ -68,7 +68,7 @@ class SAT:
                     # p = propositional variable such that a change in its truth assignment 
                     # gives the largest increase in the total number of clauses of a that are
                     # satisfies by T
-                    p = self.find_p_gsat(T, clauses, variables)
+                    p = self.find_p(T, clauses, variables)
 
                     # T = T with p reversed
                     T[p] = (T[p] + 1) % 2 
@@ -92,30 +92,7 @@ class SAT:
                 unsatisfied_clauses.append(clause)
         return satisfied, unsatisfied_clauses
 
-    def find_p_walksat(self, T, clauses, variables):
-        potential_p = []
-        max_satisfied_clauses = float("-inf")
-        for variable in variables:
-            satisfied_clauses = 0
-            #(0+1)%2=1, (1+1)%2 = 0
-            T[variable] = (T[variable] + 1) % 2 
-            for clause in clauses:
-                if self.clause_satisfied(T, clause):
-                    satisfied_clauses+=1
-            
-            if satisfied_clauses == max_satisfied_clauses:
-                potential_p.append(variable)
-        
-            elif satisfied_clauses > max_satisfied_clauses:
-                potential_p = [variable]
-                max_satisfied_clauses = satisfied_clauses
-
-            #flip variable back for next loop
-            T[variable] = (T[variable] + 1) % 2
-
-        return choice(potential_p)
-
-    def find_p_gsat(self, T, clauses, variables):
+    def find_p(self, T, clauses, variables):
         potential_p = []
         max_satisfied_clauses = float("-inf")
         for variable in variables:
