@@ -33,6 +33,7 @@ Yes, both actually work as described, and worked for all the test cases. The sol
  </tr>
  <tr>
     <td> 
+        
         A1
     1 0 0 | 0 0 0 | 0 0 0 
     0 0 0 | 0 0 0 | 0 0 0 
@@ -57,8 +58,10 @@ Yes, both actually work as described, and worked for all the test cases. The sol
     6 7 9 | 3 7 9 | 3 5 9 
     2 3 7 | 4 3 4 | 1 8 7 
     3 9 3 | 6 6 4 | 2 7 6 
+        
      </td>
     <td>  
+        
         B1
     7 0 0 | 0 0 0 | 0 0 0 
     0 0 0 | 0 0 0 | 0 0 0 
@@ -162,9 +165,11 @@ Yes, both actually work as described, and worked for all the test cases. The sol
     9 6 1 | 5 3 7 | 2 8 4 
     2 8 7 | 4 1 9 | 6 3 5 
     3 4 5 | 2 8 6 | 1 7 9 
+        
      </td>
  </tr>
 </table>
+
     A1
     1 0 0 | 0 0 0 | 0 0 0 
     0 0 0 | 0 0 0 | 0 0 0 
