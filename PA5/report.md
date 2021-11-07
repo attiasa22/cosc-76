@@ -26,7 +26,7 @@ Yes, both actually work as described, and worked for all the test cases. The sol
 | Puzzle 1    |             | ----------- | B6          | 25979       |
 | Puzzle 2    |             | ----------- | B7          | 43897       |
 | Puzzle Bonus|             | ----------- | B8          | 24677       |
-    
+
     A1
     1 0 0 | 0 0 0 | 0 0 0 
     0 0 0 | 0 0 0 | 0 0 0 
