@@ -72,8 +72,18 @@ class Maze:
         if y < 0 or y >= self.height:
             return False
 
-        return self.map[self.index(x, y)] == "."
+        return self.map[self.index(x, y)] != "#"
 
+    def find_floors(self):
+        floors=[]
+
+        for i in range(self.width):
+            for j in range(self.height):
+                if self.is_floor(i, j):
+
+                    floors.append([i,j])
+
+        return floors
 
     def has_robot(self, x, y):
         if x < 0 or x >= self.width:
