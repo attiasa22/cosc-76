@@ -74,6 +74,14 @@ class Maze:
 
         return self.map[self.index(x, y)] != "#"
 
+    def get_floor(self, x, y):
+        if x < 0 or x >= self.width:
+            return False
+        if y < 0 or y >= self.height:
+            return False
+
+        return self.map[self.index(x, y)]
+
     def find_floors(self):
         floors=[]
 
@@ -139,7 +147,7 @@ class Maze:
 
 
 def robotchar(robot_number):
-    return chr(ord("A") + robot_number)
+    return chr(ord("1") + robot_number)
 
 
 # Some test code

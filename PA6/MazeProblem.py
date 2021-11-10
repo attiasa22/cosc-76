@@ -3,16 +3,25 @@ from Maze import Maze
 import numpy as np
 
 
-class MazeworldProblem:
+class MazeProblem:
 
     def __init__(self, maze):
         self.maze = maze
+        # list of all possible floors - the states used by the markov problem
         self.list_of_floors = maze.find_floors()
-        self.distribution = self.initialize_matrix()
+        # each floor is evenly likely at the start
+        self.initial_distribution = self.initialize_matrix()
+        # set a random initial state for the robot
         self.current_state = self.set_random_start() 
-        self.solution = [self.distribution]
+        # odds sensor is correct
         self.color_probability = 0.88
-        self.true_states = [self.start_state]
+        
+        # list of distributions
+        self.solution = [self.initial_distribution]
+        # robot's path
+        self.true_states = [self.current_state]
+
+        self.observed_color = ["X"]
 
     def __str__(self):
         string =  "Mazeworld Markov problem: "
@@ -20,33 +29,37 @@ class MazeworldProblem:
 
     def initialize_matrix(self):
         initial_distribution = 1/len(self.list_of_floors)
-        distribution = np.diag(np.array([initial_distribution]*len(self.list_of_floors)))
-        print(distribution)
-        return distribution
+        distribution_matrix = np.array([initial_distribution]*len(self.list_of_floors))
+
+        return distribution_matrix
 
     def set_random_start(self): 
         if len(self.list_of_floors)==0 or len(self.list_of_floors)==1: 
-            return self.goal_test()
+            print("No HMM necessary")
         
         return choice(self.list_of_floors)
 
-    def goal_test(self):
-        if len(self.list_of_floors)==0:
-            return "NO FLOORS"
+    def show_solution(self):
+       
+        for i in range(len(self.solution)):
+            probability_matrix = np.zeros((self.maze.height,self.maze.width))
+            self.maze.robotloc[0] = self.true_states[i][0]
+            self.maze.robotloc[1] = self.true_states[i][1]
+            self.maze.create_render_list()
+            print("Current Position: " + str(self.maze.robotloc))
+            print("Percieved Color: " + str(self.observed_color[i]))
+            print("Real Color: " + str(self.maze.get_floor( self.maze.robotloc[0],self.maze.robotloc[1])))
+            print("MAZE: \n"+str(self.maze))
 
-        if all(v == 0 for v in self.distribution):
-            return "FAILURE"
+            for j in range(len(self.solution[i])):
+                probability_matrix[self.list_of_floors[j][1]][self.list_of_floors[j][0]] = self.solution[i][j]
+            print(np.flip(probability_matrix, 0))
 
-        if len(set(self.distribution).difference(set(0))) == 1:
-            return self.solution
 
-        else: 
-            return 0
+
 
 
 if __name__ == "__main__":
     test_maze1 = Maze("PA6/maze1.maz")
-    problem = MazeworldProblem(test_maze1)
-    print(problem.initialize_matrix().size)
-    print(test_maze1.is_floor(1,2))
-
+    problem = MazeProblem(test_maze1)
+    print(problem.initialize_matrix())
