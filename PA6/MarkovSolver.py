@@ -15,9 +15,12 @@ class MarkovSolver:
         # f_1:t+1 = a(O_t+1)(T_transpose)(f_1:t)
         f_t = self.maze_problem.initial_distribution
         transition_matrix_transpose = np.transpose(self.transition_matrix())
+        print(f_t.shape)
+        print(transition_matrix_transpose.shape)
         # apply the HMM a certain number of times
-        for i in range(20):
+        for i in range(10):
             observation_matrix = self.observation_matrix()
+            print(observation_matrix.shape)
             #sci_kit learn's normalize function performs the same action as a in the equation
             f_t = normalize(((observation_matrix @ transition_matrix_transpose) @ f_t).reshape(-1,1), axis=0, norm = 'l1')
             self.maze_problem.solution += [f_t]
@@ -28,7 +31,7 @@ class MarkovSolver:
     # So any wall encountered is actually an increase of 0.25 to T[i][i]
     def transition_matrix(self):
         # initialize a S xS matrix of zeros
-        dimension = self.maze_problem.maze.width * self.maze_problem.maze.height
+        dimension = len(self.maze_problem.list_of_floors)
         transition_matrix= np.zeros((dimension,dimension))
         # for each state
         for floor in self.maze_problem.list_of_floors:
@@ -102,7 +105,7 @@ class MarkovSolver:
 
 if __name__ == "__main__":
 
-    test_maze1 = Maze("PA6/maze1.maz")
+    test_maze1 = Maze("PA6/maze4.maz")
     problem = MazeProblem(test_maze1)
     solver = MarkovSolver(problem)
     
