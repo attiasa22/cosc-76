@@ -16,7 +16,7 @@ class MarkovSolver:
         f_t = self.maze_problem.initial_distribution
         transition_matrix_transpose = self.transition_matrix().T
         # apply the HMM a certain number of times
-        for i in range(3):
+        for i in range(50):
             observation_matrix = self.observation_matrix()
             #sci_kit learn's normalize function performs the same action as a in the equation
             f_t = normalize(((observation_matrix @ transition_matrix_transpose) @ f_t).reshape(-1,1), axis=0, norm = 'l1')
@@ -39,9 +39,10 @@ class MarkovSolver:
         T2 = np.zeros((state_size, observation_count))
         T1[:, 0] = initial_probabilities * emission_matrix[:, color_map[observations[0]]]
 
-        for i in range(observation_count):
-            T1[:][i] = np.max(T1[:][i - 1] * transition_matrix.T * emission_matrix[:][color_map[observations[i]]].T, 1)
-            T2[:][i] = np.argmax(T1[:][i - 1] * transition_matrix.T, 1)
+        for i in range(1, observation_count):
+
+            T1[:,i] = np.max((T1[:, i-1 ] * transition_matrix.T) * emission_matrix[:, color_map[observations[i]]].T, 1)
+            T2[:, i] = np.argmax(T1[:, i-1 ] * transition_matrix.T, 1)
         solution = np.zeros(observation_count)
         solution[-1] = np.argmax(T1[:, observation_count - 1])
 
