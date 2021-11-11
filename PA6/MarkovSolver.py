@@ -14,17 +14,41 @@ class MarkovSolver:
         # this function continuously applies the matrix transformation version
         # f_1:t+1 = a(O_t+1)(T_transpose)(f_1:t)
         f_t = self.maze_problem.initial_distribution
-        transition_matrix_transpose = np.transpose(self.transition_matrix())
-        print(f_t.shape)
-        print(transition_matrix_transpose.shape)
+        transition_matrix_transpose = self.transition_matrix().T
         # apply the HMM a certain number of times
-        for i in range(10):
+        for i in range(3):
             observation_matrix = self.observation_matrix()
-            print(observation_matrix.shape)
             #sci_kit learn's normalize function performs the same action as a in the equation
             f_t = normalize(((observation_matrix @ transition_matrix_transpose) @ f_t).reshape(-1,1), axis=0, norm = 'l1')
             self.maze_problem.solution += [f_t]
         
+
+    def viterbi(self):
+        color_map = {"R":0, "G":1, "B":2, "Y":3}
+        observations =  self.maze_problem.observed_color
+        print(len(observations))
+        transition_matrix = self.transition_matrix()
+        print(transition_matrix.shape)
+        emission_matrix = self.emission_matrix()
+        print(emission_matrix.shape)
+        initial_probabilities = self.maze_problem.initial_distribution
+        
+        state_size = len(self.maze_problem.list_of_floors)
+        observation_count = len(observations)
+        T1 = np.zeros((state_size, observation_count))
+        T2 = np.zeros((state_size, observation_count))
+        T1[:, 0] = initial_probabilities * emission_matrix[:, color_map[observations[0]]]
+
+        for i in range(observation_count):
+            T1[:][i] = np.max(T1[:][i - 1] * transition_matrix.T * emission_matrix[:][color_map[observations[i]]].T, 1)
+            T2[:][i] = np.argmax(T1[:][i - 1] * transition_matrix.T, 1)
+        solution = np.zeros(observation_count)
+        solution[-1] = np.argmax(T1[:, observation_count - 1])
+
+        for i in reversed(range(1,observation_count )):
+            solution[i - 1] = T2[int(solution[i]), i]
+        print(solution)
+        return solution
     # Given S possible states, an S x S matrix T is created, such that T[i][j] is chance that we go from i to j
     # Since our robot takes a random movement in the 4 cardinal directions, that chance is 0.25
     # However, a floor bordering a wall actually has a chance to come from itself, 
@@ -81,6 +105,17 @@ class MarkovSolver:
 
         return observational_matrix
 
+    def emission_matrix(self):
+        color_map = {"R":0, "G":1, "B":2, "Y":3}
+        emission_matrix = np.full((len(self.maze_problem.list_of_floors), 4), 0.12)
+
+        for i in range((len(self.maze_problem.list_of_floors))):
+            
+            j= color_map[self.maze_problem.maze.get_floor(self.maze_problem.list_of_floors[i][0],self.maze_problem.list_of_floors[i][1])]
+            emission_matrix[i,j] = self.maze_problem.color_probability
+
+        return emission_matrix
+
     def get_new_color(self):
         # get current state coordinates
         x = self.maze_problem.current_state[0]
@@ -111,3 +146,4 @@ if __name__ == "__main__":
     
     solver.filtering()
     problem.show_solution()
+    solver.viterbi()

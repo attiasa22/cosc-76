@@ -21,7 +21,7 @@ class MazeProblem:
         # robot's path
         self.true_states = [self.current_state]
 
-        self.observed_color = ["X"]
+        self.observed_color = [str(self.maze.get_floor( self.current_state[0],self.current_state[1]))]
 
     def __str__(self):
         string =  "Mazeworld Markov problem: "
