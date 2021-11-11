@@ -15,13 +15,14 @@ class MazeProblem:
         self.current_state = self.set_random_start() 
         # odds sensor is correct
         self.color_probability = 0.88
-        
         # list of distributions
         self.solution = [self.initial_distribution]
+        self.veterbi_solution = []
         # robot's path
         self.true_states = [self.current_state]
 
         self.observed_color = [str(self.maze.get_floor( self.current_state[0],self.current_state[1]))]
+
 
     def __str__(self):
         string =  "Mazeworld Markov problem: "
@@ -40,13 +41,15 @@ class MazeProblem:
         return choice(self.list_of_floors)
 
     def show_solution(self):
-       
+        print(len(self.solution))
+        print(len(self.veterbi_solution))
         for i in range(len(self.solution)):
             probability_matrix = np.zeros((self.maze.height,self.maze.width))
             self.maze.robotloc[0] = self.true_states[i][0]
             self.maze.robotloc[1] = self.true_states[i][1]
             self.maze.create_render_list()
             print("Current Position: " + str(self.maze.robotloc))
+            print("Veterbi Position: " + str(self.list_of_floors[int(self.veterbi_solution[i])]))
             print("Percieved Color: " + str(self.observed_color[i]))
             print("Real Color: " + str(self.maze.get_floor( self.maze.robotloc[0],self.maze.robotloc[1])))
             print("MAZE: \n"+str(self.maze))

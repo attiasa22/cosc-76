@@ -47,8 +47,9 @@ class MarkovSolver:
         solution[-1] = np.argmax(T1[:, observation_count - 1])
 
         for i in reversed(range(1,observation_count )):
-            solution[i - 1] = T2[int(solution[i]), i]
+            solution[i - 1] = int(T2[int(solution[i]), i])
         print(solution)
+        self.maze_problem.veterbi_solution = solution
         return solution
     # Given S possible states, an S x S matrix T is created, such that T[i][j] is chance that we go from i to j
     # Since our robot takes a random movement in the 4 cardinal directions, that chance is 0.25
@@ -141,10 +142,11 @@ class MarkovSolver:
 
 if __name__ == "__main__":
 
-    test_maze1 = Maze("PA6/maze4.maz")
+    test_maze1 = Maze("PA6/maze1.maz")
     problem = MazeProblem(test_maze1)
     solver = MarkovSolver(problem)
     
     solver.filtering()
-    problem.show_solution()
     solver.viterbi()
+    problem.show_solution()
+    
