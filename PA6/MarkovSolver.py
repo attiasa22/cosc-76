@@ -2,12 +2,14 @@ import numpy as np
 from sklearn.preprocessing import normalize
 from MazeProblem import MazeProblem
 from Maze import Maze
+import timeit
+import matplotlib.pyplot as plt
 
 class MarkovSolver:
 
     def __init__(self, problem):
         self.problem = problem
-        
+
     def filtering(self, observations):
         # this function continuously applies the matrix transformation version
         # f_1:t+1 = a(O_t+1)(T_transpose)(f_1:t)
@@ -125,5 +127,44 @@ if __name__ == "__main__":
     
     solver.filtering(20)
     # uncomment for viterbi
-    # solver.viterbi()
+    solver.viterbi()
     problem.show_solution()
+
+    '''
+    a=(timeit.timeit('solver.filtering(20)', "from __main__ import solver", number=5))
+    b=(timeit.timeit('solver.filtering(200)', "from __main__ import solver", number=5))
+    c=(timeit.timeit('solver.filtering(2000)', "from __main__ import solver", number=5))
+    print(1)
+    d=(timeit.timeit('solver.filtering(20000)', "from __main__ import solver", number=5))
+    print(2)
+    time_4_4 = [a,b,c,d]
+    
+    test_maze1 = Maze("PA6/maze4.maz")
+    problem = MazeProblem(test_maze1, 0.88)
+    solver = MarkovSolver(problem)
+    
+    #solver.filtering(20)
+    # uncomment for viterbi
+    # solver.viterbi()
+    #problem.show_solution()
+
+    a = (timeit.timeit('solver.filtering(20)', "from __main__ import solver", number=5))
+    b = (timeit.timeit('solver.filtering(200)', "from __main__ import solver", number=5))
+    c = (timeit.timeit('solver.filtering(2000)', "from __main__ import solver", number=5))
+    
+    print(3)
+    d = (timeit.timeit('solver.filtering(20000)', "from __main__ import solver", number=5))
+    print(4)
+    time_2_2 = [a,b,c,d]
+    print(time_2_2)
+    
+
+
+    plt.plot([20,200,2000, 20000],time_2_2, color = "green")
+    plt.plot([20,200,2000, 20000],time_4_4, color = "red")
+    plt.ylabel('Time (s)')
+    plt.xlabel('filter calls')
+    plt.legend(["4x4 maze", "2x2 maze"])
+    plt.show()
+    
+    '''
