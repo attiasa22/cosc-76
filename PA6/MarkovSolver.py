@@ -120,22 +120,25 @@ class MarkovSolver:
         return emission_matrix
 
 if __name__ == "__main__":
-
+    
     test_maze1 = Maze("PA6/maze1.maz")
     problem = MazeProblem(test_maze1, 0.88)
     solver = MarkovSolver(problem)
     
-    solver.filtering(20)
+    #solver.filtering(10)
     # uncomment for viterbi
-    solver.viterbi()
-    problem.show_solution()
+    #print(solver.viterbi())
+    #problem.show_solution()
 
-    '''
-    a=(timeit.timeit('solver.filtering(20)', "from __main__ import solver", number=5))
-    b=(timeit.timeit('solver.filtering(200)', "from __main__ import solver", number=5))
-    c=(timeit.timeit('solver.filtering(2000)', "from __main__ import solver", number=5))
+    solver.filtering(20)
+    a=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
+    solver.filtering(200)
+    b=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
+    solver.filtering(2000)
+    c=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
     print(1)
-    d=(timeit.timeit('solver.filtering(20000)', "from __main__ import solver", number=5))
+    solver.filtering(20000)
+    d=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
     print(2)
     time_4_4 = [a,b,c,d]
     
@@ -148,12 +151,15 @@ if __name__ == "__main__":
     # solver.viterbi()
     #problem.show_solution()
 
-    a = (timeit.timeit('solver.filtering(20)', "from __main__ import solver", number=5))
-    b = (timeit.timeit('solver.filtering(200)', "from __main__ import solver", number=5))
-    c = (timeit.timeit('solver.filtering(2000)', "from __main__ import solver", number=5))
-    
-    print(3)
-    d = (timeit.timeit('solver.filtering(20000)', "from __main__ import solver", number=5))
+    solver.filtering(20)
+    a=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
+    solver.filtering(200)
+    b=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
+    solver.filtering(2000)
+    c=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
+    print(1)
+    solver.filtering(20000)
+    d=(timeit.timeit('solver.viterbi()', "from __main__ import solver", number=5))
     print(4)
     time_2_2 = [a,b,c,d]
     print(time_2_2)
@@ -164,7 +170,7 @@ if __name__ == "__main__":
     plt.plot([20,200,2000, 20000],time_4_4, color = "red")
     plt.ylabel('Time (s)')
     plt.xlabel('filter calls')
-    plt.legend(["4x4 maze", "2x2 maze"])
+    plt.legend(["2x2 maze", "4x4 maze",])
     plt.show()
     
-    '''
+    
